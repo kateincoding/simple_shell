@@ -15,6 +15,7 @@ void remove_new_line_char(char **args, int index);
 /* Memory management */
 void *allocate_memory(unsigned int bytes);
 char *duplicate_string(char *str);
+void free_dbl_ptr(char **dbl_ptr);
 /* Error handlers */
 void dispatch_error(char *msg, int status);
 
@@ -28,7 +29,7 @@ int main(int __attribute__((unused))ac, char **av)
 	size_t buff_len = 0;
 
 	int child_pid;
-	char **commands;
+	char **commands = NULL;
 
 	while(1)
 	{
@@ -40,10 +41,11 @@ int main(int __attribute__((unused))ac, char **av)
 		if (read == EOF || strcmp(buff,"exit\n") == 0)
 		{
 			free(buff);
+			free_dbl_ptr(commands);
 			exit(0);
 		}
 
-		if (buff[0] == '\n')
+		if (buff[0] == '\n' && buff[1] == '\0')
 			continue;
 
 		/* Fork parent process to execute the command */
@@ -58,10 +60,12 @@ int main(int __attribute__((unused))ac, char **av)
 			handle_PATH(commands);
 			execve(commands[0], commands, NULL);
 			/* handle errors */
+			free(buff);
+			free_dbl_ptr(commands);
 			dispatch_error(av[0], 1);
 		}
 		else
-			wait (NULL);
+			wait(NULL);
 	}
 
 	/* Cleanup buffer memory */
@@ -74,7 +78,7 @@ char **parse_user_input(char *str_input)
 {
 	int i, args_count = 0;
 	char **args;
-	char *token, *delimiter = " ";
+	char *token, *tkn_ptr, *delimiter = " ";
 	char *str_copy;
 
 	if (str_input == NULL)
@@ -86,12 +90,13 @@ char **parse_user_input(char *str_input)
 	args = allocate_memory(sizeof(char *) * (args_count + 1));
 	/* Store each argument as a string */
 	str_copy = duplicate_string(str_input);
+	tkn_ptr = str_copy;
 	for (i = 0; i < args_count; i++)
 	{
-		token = strtok(str_copy, delimiter);
+		token = strtok(tkn_ptr, delimiter);
 		if (token == NULL)
 			break;
-		str_copy = NULL;
+		tkn_ptr = NULL;
 		/* store command as single string */
 		args[i] = duplicate_string(token);
 		/* Remove '\n' char from command */
@@ -107,14 +112,15 @@ char **parse_user_input(char *str_input)
 
 int count_args(char *str_input, char *delimiter)
 {
-	char *tkn;
+	char *tkn, *tkn_ptr;
 	int count = 0;
 	char *str_copy = duplicate_string(str_input);
 
-	while((tkn = strtok(str_copy, delimiter)) != NULL)
+	tkn_ptr = str_copy;
+	while((tkn = strtok(tkn_ptr, delimiter)) != NULL)
 	{
 		count++;
-		str_copy = NULL;
+		tkn_ptr = NULL;
 	}
 
 	free(str_copy);
@@ -192,10 +198,7 @@ void handle_PATH(char **commands)
 	if (path_dirs == NULL)
 		dispatch_error("Error", 100);
 
-	str_copy = strdup(path_dirs);
-	if (str_copy == NULL)
-		dispatch_error("Error", 100);
-
+	str_copy = duplicate_string(path_dirs);
 	tkn_ptr = str_copy;
 	while (1)
 	{
@@ -223,13 +226,26 @@ char *getpath(char *dir, char *filename)
 	int filename_len = strlen(filename);
 	char *path;
 
-	path = malloc(sizeof(char *) * (dir_len + filename_len + 2));
-	if (path == NULL)
-		dispatch_error("Error", 10);
+	path = allocate_memory(sizeof(char *) * (dir_len + filename_len + 2));
 
 	strcpy(path, dir);
 	strcat(path, "/");
-	strcat(path, filename);
+	strncat(path, filename, filename_len + 1);
 
 	return path;
+}
+
+void free_dbl_ptr(char **dbl_ptr)
+{
+	int i;
+	char *curr, *prev;
+
+	if (dbl_ptr == NULL)
+		return;
+
+	for (i = 0; dbl_ptr[i]; i++)
+		free(dbl_ptr[i]);
+	/*free(dbl_ptr[i]);*/
+
+	free(dbl_ptr);
 }
