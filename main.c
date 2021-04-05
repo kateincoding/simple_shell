@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 /* Command handlers */
 char **parse_user_input(char *str_input);
@@ -17,7 +18,7 @@ char *duplicate_string(char *str);
 /* Error handlers */
 void dispatch_error(char *msg, int status);
 
-int main()
+int main(int __attribute__((unused))ac, char **av)
 {
 	int read;
 	char *buff = NULL;
@@ -42,10 +43,7 @@ int main()
 		/* Fork parent process to execute the command */
 		child_pid = fork();
 		if (child_pid == -1)
-		{
-			perror("Error");
-			exit(1);
-		}
+			dispatch_error(av[0], 1);
 		/* Fork parent process to execute the command */
 		else if (child_pid == 0)
 		{
@@ -53,8 +51,7 @@ int main()
 			commands = parse_user_input(buff);
 			execve(commands[0], commands, NULL);
 			/* handle errors */
-			perror("Error");
-			exit(1);
+			dispatch_error(av[0], 1);
 		}
 		else
 			wait (NULL);
@@ -78,13 +75,8 @@ char **parse_user_input(char *str_input)
 
 	/* Count the number of arguments present in the input */
 	args_count = count_args(str_input, delimiter);
-	args_count = 1;
 	/* Allocate memory to hold eaach argument as a string */
-	args = allocate_memory((sizeof(char *) * (args_count + 1)));
-	args[0] = str_input;
-	remove_new_line_char(args, 0);
-	args[1] = NULL;
-	return (args);
+	args = allocate_memory(sizeof(char *) * (args_count + 1));
 	/* Store each argument as a string */
 	str_copy = duplicate_string(str_input);
 	for (i = 0; i < args_count; i++)
