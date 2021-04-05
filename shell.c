@@ -29,8 +29,8 @@ int main()
 	while(1)
 	{
 		/* Print console symbol */
-		printf("#cisfun$ ");
 		fflush(stdout);
+		printf("#cisfun$ ");
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		if (read == EOF)
@@ -54,13 +54,11 @@ int main()
 			if (commands[1] != NULL)
 			{
 				free(commands);
-				perror("Error");
-				exit(1);
+				dispatch_error("./shell: No such file or directory\n", 100);
 			}
 			execve(commands[0], commands, NULL);
 			/* handle errors */
-			perror("Error");
-			exit(1);
+			dispatch_error("Error\n", 100);
 		}
 		else
 			wait (NULL);
