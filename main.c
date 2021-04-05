@@ -30,6 +30,7 @@ int main()
 	{
 		/* Print console symbol */
 		printf("#cisfun$ ");
+		fflush(stdout);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		if (read == EOF || strcmp(buff,"exit\n") == 0)
