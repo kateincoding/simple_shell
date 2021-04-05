@@ -19,18 +19,21 @@ void dispatch_error(char *msg, int status);
 
 int main()
 {
-	int read;
+	int read, flag, interactive = 1;
 	char *buff = NULL;
 	size_t buff_len = 0;
 
 	int child_pid;
 	char **commands;
 
+	/* 1 if is interactive | 0 if is it no interactive */
+	if (isatty(STDIN_FILENO) == 0)
+		interactive = 0;
 	while(1)
 	{
-		/* Print console symbol */
-		fflush(stdout);
-		printf("#cisfun$ ");
+		/* Print console symbol only if it is interactive*/
+		if (interactive == 1)
+			printf("#cisfun$ ");
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		if (read == EOF)
@@ -38,7 +41,7 @@ int main()
 			free(buff);
 			exit(0);
 		}
-
+		printf("line = %s\n", buff);
 		/* Fork parent process to execute the command */
 		child_pid = fork();
 		if (child_pid == -1)
