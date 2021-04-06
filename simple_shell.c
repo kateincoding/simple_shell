@@ -16,7 +16,13 @@ void dispatch_error(char *msg, int status);
 void handle_PATH(char **commands);
 char *getpath(char *dir, char *filename);
 
-int handle_builtins(char **commands);
+int handle_builtins(char *command);
+
+int handle_exit(char *buff);
+int is_enter(char *buff);
+char *exit_status_str(char *buff);
+int get_exit_status(char *buff);
+void print_Illegal_exit_status(char *status_str);
 
 /**
  * main - Entry point
@@ -32,7 +38,9 @@ int main(int __attribute__((unused))ac, char **av)
 	size_t buff_len = 0;
 
 	int child_pid;
-	char **commands = NULL;
+
+	int exec_builtin;
+	int was_exit;
 
 	while (1)
 	{
@@ -41,14 +49,23 @@ int main(int __attribute__((unused))ac, char **av)
 		fflush(stdout);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
-		if (read == EOF || strcmp(buff, "exit\n") == 0)
+		was_exit = handle_exit(buff);
+		if (read == EOF || was_exit == 1)
 		{
 			free(buff);
-			free_dbl_ptr(commands);
 			exit(0);
 		}
 
-		if (buff[0] == '\n' && buff[1] == '\0')
+		/* handle case when the user presses ENTER key */
+		if (was_exit == -1 || is_enter(buff))
+			continue;
+
+		/* Remove '\n' char from buffer */
+		_strtok(buff, "\n");
+
+		/* Check if the command is a builtin */
+		exec_builtin = handle_builtins(buff);
+		if (exec_builtin == 1)
 			continue;
 
 		/* Fork parent process to execute the command */
@@ -58,19 +75,10 @@ int main(int __attribute__((unused))ac, char **av)
 		/* Fork parent process to execute the command */
 		else if (child_pid == 0)
 		{
-			int is_builtin;
-			/* execute command */
-			commands = parse_user_input(buff);
-			/* Check if the command is a builtin */
-			is_builtin = handle_builtins(commands);
-			if (is_builtin == 1)
-			{
-				free(buff);
-				free_dbl_ptr(commands);
-				exit(0);
-			}
-			/* Handle non builtin commands */
+			char **commands = parse_user_input(buff);
+
 			handle_PATH(commands);
+			/* execute command */
 			execve(commands[0], commands, NULL);
 			/* handle errors */
 			free(buff);
@@ -118,8 +126,6 @@ char **parse_user_input(char *str_input)
 		tkn_ptr = NULL;
 		/* store command as single string */
 		args[i] = duplicate_string(token);
-		/* Remove '\n' char from command */
-		remove_new_line_char(args, i);
 	}
 	/* set the last element of array of arguments to NULL */
 	args[i] = NULL;
@@ -305,17 +311,157 @@ void free_dbl_ptr(char **dbl_ptr)
 
 /**
  * handle_builtins - Perfoms the builtin in case the command is one
- * @commands: Command as a string given by the user
+ * @buff: Command as a string given by the user
  *
  * Return: 1 if the commad is a builtin, 0 otherwise
 */
-int handle_builtins(char **commands)
+int handle_builtins(char *buff)
 {
-	if (strcmp(commands[0], "env") == 0)
+	int i = 0;
+
+	/* Avoid all first spaces */
+	while (buff[i] != '\0' && buff[i] == ' ')
+		i++;
+
+	if (strncmp(&buff[i], "env", 3) == 0)
 	{
 		env();
 		return (1);
 	}
 
 	return (0);
+}
+
+/**
+ * handle_exit - Checks if the user entered the exit command
+ * @buff: User's command as input
+ *
+ * Return: 1 If the exit command was entered, -1 if the exit status
+ *				was incorrect, 0 if the command wasn't exit
+*/
+int handle_exit(char *buff)
+{
+	int i;
+	int status;
+	char *status_str;
+
+	for (i = 0; buff[i] != '\0'; i++)
+	{
+		if (buff[i] == ' ')
+			continue;
+
+		if (strncmp(&buff[i], "exit", 4) != 0)
+			return (0);
+
+		/* It is an exit command */
+		for (i = i + 4; buff[i] != '\0'; i++)
+		{
+			if (buff[i] == ' ')
+				continue;
+
+			status_str = exit_status_str(&buff[i]);
+			status = get_exit_status(status_str);
+			if (status >= 0)
+			{
+				free(buff);
+				exit(status);
+			}
+
+			/* the exit status passed was illegal */
+			print_Illegal_exit_status(status_str);
+			return (-1);
+		}
+		/* is exit */
+		return (1);
+	}
+
+	return (0);
+}
+
+/**
+ * print_Illegal_exit_status - Prints the error message to the screen
+ * @status_str: Staus passed as exit status argument
+*/
+void print_Illegal_exit_status(char *status_str)
+{
+	char *err = "exit: Illegal number: ";
+	int err1_len = strlen(err);
+	int err2_len = strlen(status_str);
+	char *err_msg = allocate_memory(sizeof(char *) * (err1_len + err2_len + 2));
+
+	strcpy(err_msg, err);
+	strcat(err_msg, status_str);
+	strcat(err_msg, "\n");
+	/* Print error message */
+	write(STDOUT_FILENO, err_msg, err1_len + err2_len + 1);
+	free(err_msg);
+}
+
+/**
+ * is_enter - Check if no command was entered
+ * @buff: User's input
+ *
+ * Return: 1 if no command was entered(just spaces and ENTER), 0 otherwise
+*/
+int is_enter(char *buff)
+{
+	int i;
+
+	for (i = 0; buff[i] != '\0'; i++)
+	{
+		if (buff[i] == ' ')
+			continue;
+
+		if (buff[i] == '\n')
+			return (1);
+
+		return (0);
+	}
+
+	return (0);
+}
+
+/**
+ * exit_status_str - Finds the start of the status code in a string
+ * @buff: User's input
+ *
+ * Return: Pointer to the start of status code entered by the user
+*/
+char *exit_status_str(char *buff)
+{
+	int i;
+
+	for (i = 0; buff[i] != '\0'; i++)
+		if (buff[i] == ' ' || buff[i] == '\n')
+			break;
+
+	buff[i] = '\0';
+
+	return (buff);
+}
+
+/**
+ * get_exit_status - Calculates the exit status as a number
+ * @buff: User's input
+ *
+ * Return: Exist status as number, -1 on error
+*/
+int get_exit_status(char *buff)
+{
+	int i;
+	int status = 0;
+
+	for (i = 0; buff[i] != '\0'; i++)
+	{
+		if (buff[i] == '\n')
+			return (status);
+
+		if (buff[i] < '0' || buff[i] > '9')
+			return (-1);
+
+		status *= 10;
+		status += buff[i] - '0';
+	}
+
+	return (status);
 }
