@@ -1,5 +1,6 @@
 #include "shell.h"
 
+/* I selected start with 4 because is the smallest command: ls/n/0 */
 #define BUFF_SIZE 4
 
 char *_memset(char *str, char a, unsigned int n)
@@ -16,8 +17,9 @@ int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
 	char *buf_tmp;
 	size_t size;
 	unsigned int i = 0, len = 0;
-	int read;
+	int r, fd;
 
+	stream = stdin;
 	/* case: we don't have nothing to read */
 	if(buffer == NULL || buf_size == NULL)
 	{
@@ -41,14 +43,16 @@ int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
 
 	while (1)
 	{
+		if (stream == stdin)
+			fd = 0;
 		/* read(int fd, void *buf, size_t count) each BUFF_SIZE */
-		read = read(stream, buf_tmp + len, BUFF_SIZE);
+		r = read(fd, buf_tmp + len, BUFF_SIZE);
 		
 		/* next: we read read + len */
-		if (read >= 0)
-			i = len, len += read;
+		if (r >= 0)
+			i = len, len += r;
 		/* case of error */
-		else if ( read == -1 || read == 0)
+		else if ( r == -1 || r == 0)
 			return (-1);
 		/* case len > size when len != 0*/
 		if (len >= size)
