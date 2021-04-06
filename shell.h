@@ -12,4 +12,7 @@
 /* builtins */
 void env(void);
 
+/* own implementations */
+char *_strtok(char *str, char *delimiter);
+
 #endif /* __SHELL_H */

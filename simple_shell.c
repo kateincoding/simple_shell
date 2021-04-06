@@ -34,14 +34,14 @@ int main(int __attribute__((unused))ac, char **av)
 	int child_pid;
 	char **commands = NULL;
 
-	while(1)
+	while (1)
 	{
 		/* Print console symbol */
 		printf("#cisfun$ ");
 		fflush(stdout);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
-		if (read == EOF || strcmp(buff,"exit\n") == 0)
+		if (read == EOF || strcmp(buff, "exit\n") == 0)
 		{
 			free(buff);
 			free_dbl_ptr(commands);
@@ -112,7 +112,7 @@ char **parse_user_input(char *str_input)
 	tkn_ptr = str_copy;
 	for (i = 0; i < args_count; i++)
 	{
-		token = strtok(tkn_ptr, delimiter);
+		token = _strtok(tkn_ptr, delimiter);
 		if (token == NULL)
 			break;
 		tkn_ptr = NULL;
@@ -133,7 +133,7 @@ char **parse_user_input(char *str_input)
  * count_args - Counts the number of arguments in a command string
  * @str_input: Command as a string
  * @delimiter: Delimiter by wich to separate the args
- * 
+ *
  * Return: Number of arguments present in str_input
 */
 int count_args(char *str_input, char *delimiter)
@@ -143,7 +143,7 @@ int count_args(char *str_input, char *delimiter)
 	char *str_copy = duplicate_string(str_input);
 
 	tkn_ptr = str_copy;
-	while((tkn = strtok(tkn_ptr, delimiter)) != NULL)
+	while ((tkn = _strtok(tkn_ptr, delimiter)) != NULL)
 	{
 		count++;
 		tkn_ptr = NULL;
@@ -169,11 +169,12 @@ void *allocate_memory(unsigned int bytes)
 
 	return (new_mem);
 }
+
 /*
-void execute_command(char **commands)
-{
-	 logica de pipes y redirection
-}
+ * void execute_command(char **commands)
+ * {
+ *    logica de pipes y redirection
+ * }
 */
 
 /**
@@ -245,7 +246,7 @@ void handle_PATH(char **commands)
 	tkn_ptr = str_copy;
 	while (1)
 	{
-		tkn = strtok(tkn_ptr, ":");
+		tkn = _strtok(tkn_ptr, ":");
 		if (tkn == NULL)
 			break;
 		tkn_ptr = NULL;
@@ -282,7 +283,7 @@ char *getpath(char *dir, char *filename)
 	strcat(path, "/");
 	strncat(path, filename, filename_len + 1);
 
-	return path;
+	return (path);
 }
 
 /**
@@ -313,7 +314,7 @@ int handle_builtins(char **commands)
 	if (strcmp(commands[0], "env") == 0)
 	{
 		env();
-		return 1;
+		return (1);
 	}
 
 	return (0);
