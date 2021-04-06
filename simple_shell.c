@@ -16,6 +16,8 @@ void dispatch_error(char *msg, int status);
 void handle_PATH(char **commands);
 char *getpath(char *dir, char *filename);
 
+int handle_builtins(char **commands);
+
 /**
  * main - Entry point
  * @ac: number of arguments
@@ -31,8 +33,6 @@ int main(int __attribute__((unused))ac, char **av)
 
 	int child_pid;
 	char **commands = NULL;
-
-	int is_builtin;
 
 	while(1)
 	{
@@ -51,10 +51,6 @@ int main(int __attribute__((unused))ac, char **av)
 		if (buff[0] == '\n' && buff[1] == '\0')
 			continue;
 
-		is_builtin = handle_builtins(buff);
-		if (is_builtin == 1)
-			continue;
-
 		/* Fork parent process to execute the command */
 		child_pid = fork();
 		if (child_pid == -1)
@@ -62,8 +58,18 @@ int main(int __attribute__((unused))ac, char **av)
 		/* Fork parent process to execute the command */
 		else if (child_pid == 0)
 		{
+			int is_builtin;
 			/* execute command */
 			commands = parse_user_input(buff);
+			/* Check if the command is a builtin */
+			is_builtin = handle_builtins(commands);
+			if (is_builtin == 1)
+			{
+				free(buff);
+				free_dbl_ptr(commands);
+				exit(0);
+			}
+			/* Handle non builtin commands */
 			handle_PATH(commands);
 			execve(commands[0], commands, NULL);
 			/* handle errors */
@@ -286,7 +292,6 @@ char *getpath(char *dir, char *filename)
 void free_dbl_ptr(char **dbl_ptr)
 {
 	int i;
-	char *curr, *prev;
 
 	if (dbl_ptr == NULL)
 		return;
@@ -299,13 +304,13 @@ void free_dbl_ptr(char **dbl_ptr)
 
 /**
  * handle_builtins - Perfoms the builtin in case the command is one
- * @str_input: Command as a string given by the user
+ * @commands: Command as a string given by the user
  *
  * Return: 1 if the commad is a builtin, 0 otherwise
 */
-int handle_builtins(char *str_input)
+int handle_builtins(char **commands)
 {
-	if (strcmp(str_input, "env\n") == 0)
+	if (strcmp(commands[0], "env") == 0)
 	{
 		env();
 		return 1;

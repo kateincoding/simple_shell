@@ -9,4 +9,7 @@
 #include <string.h>
 #include <errno.h>
 
+/* builtins */
+void env(void);
+
 #endif /* __SHELL_H */
