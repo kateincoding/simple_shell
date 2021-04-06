@@ -12,5 +12,5 @@ void env(void)
 	{
 		write(STDOUT_FILENO, env[i], strlen(env[i]));
 		write(STDOUT_FILENO, "\n", 1);
-	}	
+	}
 }
