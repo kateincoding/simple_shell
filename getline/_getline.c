@@ -1,7 +1,8 @@
 #include "shell.h"
+#include <stdio.h>
 
 /* I selected start with 4 because is the smallest command: ls/n/0 */
-#define BUFF_SIZE 4
+#define BUFF_SIZE 256
 
 char *_memset(char *str, char a, unsigned int n)
 {
@@ -29,25 +30,19 @@ int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
 	/* initialize with a constant var BUFF_SIZE */
 	if (*buf_size == 0)
 		size = BUFF_SIZE;
-	/* caso inicial buffer = 0 */
-	if (*buffer == 0)
+	while (1)
 	{
-		/* inicializamos en size */
+		/* caso inicial buffer = 0 */
 		buf_tmp = malloc(sizeof(char) * size);
 		if (!buf_tmp)
 			return (write(2, "Segmentation Faul <error memory allocate>", 40));
 		*buffer = buf_tmp;
-	}
-	/* set buf_tmp with '\0' */
-	buf_tmp = _memset(buf_tmp, '\0', size);
-
-	while (1)
-	{
+		/* set buf_tmp with '\0' , no es necesario*/
+		buf_tmp = _memset(buf_tmp, '\0', size);
 		if (stream == stdin)
 			fd = 0;
 		/* read(int fd, void *buf, size_t count) each BUFF_SIZE */
 		r = read(fd, buf_tmp + len, BUFF_SIZE);
-		
 		/* next: we read read + len */
 		if (r >= 0)
 			i = len, len += r;
@@ -57,8 +52,6 @@ int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
 		/* case len > size when len != 0*/
 		if (len >= size)
 		{
-			/* we create size_old for then reallocate, maybe strcat in future */
-			/* size_old = size; */
 			/* we will read BUFF_SIZE ++ */
 			size += BUFF_SIZE;
 			/*  realloc() function changes the size of the memory block pointed to by ptr to size bytes.*/
@@ -71,11 +64,16 @@ int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
 		{
 			if (buf_tmp[i] == '\n')
 			{
-				/* we found the complete buffer */
+				/* we found the complete buffer, so we realloc to the new size*/
+				*buf_size = i + 1;
+				buf_tmp = realloc(buf_tmp, *buf_size);
+				if (!buf_tmp)
+					return (write(1, "error of memory allocation", 100));
 				*buffer = buf_tmp;
-				*buf_size = size;
-				/* check, maybe realloc to i */
-				return (len);
+				/*if (buf_tmp == "^D\n")
+					return(EOF); */
+				/* printf("\ni = %d || buffer = '%s' || buf_size = %zu\n", i, *buffer, *buf_size); */
+				return (*buf_size);
 			}
 			i++;
 		}

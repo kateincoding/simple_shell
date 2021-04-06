@@ -9,6 +9,9 @@
 #include <string.h>
 #include <errno.h>
 
+/* builtins */
+void env(void);
+
 int _getline(char **buffer, size_t *buf_size, FILE *restrict stream);
 
 #endif
