@@ -24,18 +24,21 @@ char *getpath(char *dir, char *filename);
 
 int main(int __attribute__((unused))ac, char **av)
 {
-	int read;
+	int read, interactive = 1;
 	char *buff = NULL;
 	size_t buff_len = 0;
 
 	int child_pid;
 	char **commands = NULL;
 
+	/* 1 if is interactive | 0 if is it no interactive */
+	if (isatty(STDIN_FILENO) == 0)
+		interactive = 0;
 	while(1)
 	{
-		/* Print console symbol */
-		printf("#cisfun$ ");
-		fflush(stdout);
+		/* Print console symbol only if it is interactive*/
+		if (interactive == 1)
+			write(1, "#cisfun$ ", 9);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		if (read == EOF || strcmp(buff,"exit\n") == 0)
