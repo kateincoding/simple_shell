@@ -242,14 +242,11 @@ char *getpath(char *dir, char *filename)
 void free_dbl_ptr(char **dbl_ptr)
 {
 	int i;
-	char *curr, *prev;
 
 	if (dbl_ptr == NULL)
 		return;
 
 	for (i = 0; dbl_ptr[i]; i++)
 		free(dbl_ptr[i]);
-	/*free(dbl_ptr[i]);*/
-
 	free(dbl_ptr);
 }

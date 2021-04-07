@@ -13,7 +13,7 @@ char *_memset(char *str, char a, unsigned int n)
 	return (str);
 }
 
-int _getline(char **buffer, size_t *buf_size, FILE *restrict stream)
+int _getline(char **buffer, size_t *buf_size, FILE *stream)
 {
 	char *buf_tmp;
 	size_t size;
