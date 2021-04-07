@@ -2,19 +2,16 @@
 
 /**
  * handle_builtins - Executes the builtin funtions in case the command is one
- * @buff: Command as a string given by the user
+ * @commands: User's input parsed as an array of commads
  *
- * Return: 1 if the commad is a builtin, 0 otherwise
+ * Return: 1 if the command is a builtin, 0 otherwise
 */
-int handle_builtins(char *buff)
+int handle_builtins(char **commands)
 {
-	int i = 0;
+	if (commands[0] == NULL)
+		return (0);
 
-	/* Avoid all first spaces */
-	while (buff[i] != '\0' && buff[i] == ' ')
-		i++;
-
-	if (strncmp(&buff[i], "env", 3) == 0)
+	if (commands[1] == NULL && strncmp(commands[0], "env", 3) == 0)
 	{
 		env();
 		return (1);

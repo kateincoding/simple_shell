@@ -37,7 +37,7 @@ int main(int __attribute__((unused))ac, char **av)
 		/* Exit error, ENTER, and builtins */
 		if (handle_exit(buff, commands) == -1 ||
 				handle_enter(commands) == 1				||
-				handle_builtins(buff) == 1)
+				handle_builtins(commands) == 1)
 		{
 			free_dbl_ptr(commands);
 			continue;

@@ -28,7 +28,7 @@ char *duplicate_string(char *str);
 void free_dbl_ptr(char **dbl_ptr);
 
 /* handle_builtins */
-int handle_builtins(char *command);
+int handle_builtins(char **commands);
 
 /* handle_enter */
 int handle_enter(char **commands);
