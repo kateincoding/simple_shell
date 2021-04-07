@@ -15,7 +15,6 @@ int handle_builtins(char *command);
 
 int handle_exit(char *buff, char **commands);
 int handle_enter(char **commands);
-char *exit_status_str(char *buff);
 int get_exit_status(char *buff);
 void print_Illegal_exit_status(char *status_str);
 
@@ -321,25 +320,6 @@ int handle_enter(char **commands)
 		return (1);
 
 	return (0);
-}
-
-/**
- * exit_status_str - Finds the start of the status code in a string
- * @buff: User's input
- *
- * Return: Pointer to the start of status code entered by the user
-*/
-char *exit_status_str(char *buff)
-{
-	int i;
-
-	for (i = 0; buff[i] != '\0'; i++)
-		if (buff[i] == ' ' || buff[i] == '\n')
-			break;
-
-	buff[i] = '\0';
-
-	return (buff);
 }
 
 /**
