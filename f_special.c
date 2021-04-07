@@ -6,7 +6,7 @@
 void build_dynamic_environ(void)
 {
 	int count_envs = 0;
-	char ** new_environ;
+	char **new_environ;
 
 	while (__environ[count_envs] != NULL)
 		count_envs++;
