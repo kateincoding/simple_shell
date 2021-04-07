@@ -14,5 +14,6 @@ void env(void);
 
 /* own implementations */
 char *_strtok(char *str, char *delimiter);
+int _getline(char **buffer, size_t *buf_size, FILE *restrict stream);
 
 #endif /* __SHELL_H */

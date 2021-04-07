@@ -1,3 +1,4 @@
+#include "shell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -40,7 +41,7 @@ int main(int __attribute__((unused))ac, char **av)
 		if (interactive == 1)
 			write(1, "#cisfun$ ", 9);
 		/* Read commands from console */
-		read = getline(&buff, &buff_len, stdin);
+		read = _getline(&buff, &buff_len, stdin);
 		if (read == EOF || strcmp(buff,"exit\n") == 0)
 		{
 			free(buff);
