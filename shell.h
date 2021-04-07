@@ -9,6 +9,10 @@
 #include <string.h>
 #include <errno.h>
 
+/* Special functions */
+void __attribute__((constructor)) build_dynamic_environ(void);
+void __attribute__((destructor)) free_dynamic_environ(void);
+
 /* builtins */
 void env(void);
 
