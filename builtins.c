@@ -61,3 +61,29 @@ int _setenv(char *name, char *value)
 
 	return (1);
 }
+
+/**
+ * _unsetenv - Removes an evironment variable
+ * @name: Name for the new env variable
+ *
+ * Return: 1 on success, -1 on error
+ */
+int _unsetenv(char *name)
+{
+	int env_index, i;
+
+	env_index = get_env_index(name);
+	if (env_index >= 0)
+	{/* var exists, We can unset it */
+		free(__environ[env_index]);
+
+		for (i = env_index; __environ[i] != NULL; i++)
+			__environ[i] = __environ[i + 1];
+
+		return (1);
+	}
+
+	/* Var doen't exist, we can print error or do nothing */
+
+	return (1);
+}

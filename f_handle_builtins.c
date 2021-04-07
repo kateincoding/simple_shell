@@ -32,5 +32,20 @@ int handle_builtins(char **commands)
 		return (1);
 	}
 
+	if (strcmp(commands[0], "unsetenv") == 0)
+	{
+		char *err_msg;
+
+		if (commands[1] == NULL || commands[2] != NULL)
+		{
+			err_msg = "Error: unsetenv command needs exactly one argument\n";
+			write(STDOUT_FILENO, err_msg, strlen(err_msg));
+			return (1);
+		}
+
+		_unsetenv(commands[1]);
+		return (1);
+	}
+
 	return (0);
 }

@@ -16,6 +16,7 @@ void __attribute__((destructor)) free_dynamic_environ(void);
 /* builtins */
 void env(void);
 int _setenv(char *name, char *value);
+int _unsetenv(char *name);
 
 /* builtins utils */
 int validate_env_name(char *name);
