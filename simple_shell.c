@@ -9,21 +9,17 @@
 */
 int main(int __attribute__((unused))ac, char **av)
 {
-	int read, interactive = 1;
+	int read;
 	char *buff = NULL;
 	size_t buff_len = 0;
 
 	int child_pid;
 	char **commands;
 
-	/* 1 if is interactive | 0 if is it no interactive */
-	if (isatty(STDIN_FILENO) == 0)
-		interactive = 0;
-
 	while (1)
 	{
 		/* Print console symbol only if it is interactive*/
-		if (interactive == 1)
+		if (isatty(STDIN_FILENO) == 1)
 			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
