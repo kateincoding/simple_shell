@@ -3,13 +3,8 @@
 /* Command handlers */
 char **parse_user_input(char *str_input);
 int count_args(char *str_input, char *delimiter);
-/*void execute_command(char **commands);*/
-/* Utils */
-void remove_new_line_char(char **args, int index);
-/* Memory management */
-void *allocate_memory(unsigned int bytes);
-char *duplicate_string(char *str);
-void free_dbl_ptr(char **dbl_ptr);
+
+
 /* Error handlers */
 void dispatch_error(char *msg, int status);
 
@@ -161,29 +156,6 @@ int count_args(char *str_input, char *delimiter)
 }
 
 /**
- * allocate_memory - Manages the allocation of memory
- * @bytes: Number representing the size in bytes to allocate
- *
- * Return: Pointer to the newly allocated memory
-*/
-void *allocate_memory(unsigned int bytes)
-{
-	char *new_mem = malloc(bytes);
-
-	if (new_mem == NULL)
-		dispatch_error("Error while allocating memory\n", 100);
-
-	return (new_mem);
-}
-
-/*
- * void execute_command(char **commands)
- * {
- *    logica de pipes y redirection
- * }
-*/
-
-/**
  * dispatch_error - Dispatches an error
  * @msg: Message to print as error
  * @status: Integer representing the error code
@@ -192,40 +164,6 @@ void dispatch_error(char *msg, int status)
 {
 	perror(msg);
 	exit(status);
-}
-
-/**
- * duplicate_string - Duplicates a given string
- * @str: String to dulicate
- *
- * Return: Pointer to the address of the newly duplicated string
-*/
-char *duplicate_string(char *str)
-{
-	char *str_copy = strdup(str);
-
-	if (str_copy == NULL)
-		dispatch_error("Error while making copy of string", 100);
-
-	return (str_copy);
-}
-
-/**
- * remove_new_line_char - Replaces '\n' char with '\0'
- * @args: Array of commands
- * @index: Command index to be evaluated
- */
-void remove_new_line_char(char **args, int index)
-{
-	int len = strlen(args[index]);
-
-	if (len == 0)
-		return;
-
-	if (len == 1 && args[index][0] == '\n')
-		args[index] = NULL;
-	else if (args[index][len - 1] == '\n')
-		args[index][len - 1] = '\0';
 }
 
 /**
@@ -290,23 +228,6 @@ char *getpath(char *dir, char *filename)
 	strncat(path, filename, filename_len + 1);
 
 	return (path);
-}
-
-/**
- * free_dbl_ptr - Frees the memory pointed to by a double pointer
- * @dbl_ptr: Double pointer
-*/
-void free_dbl_ptr(char **dbl_ptr)
-{
-	int i;
-
-	if (dbl_ptr == NULL)
-		return;
-
-	for (i = 0; dbl_ptr[i]; i++)
-		free(dbl_ptr[i]);
-
-	free(dbl_ptr);
 }
 
 /**

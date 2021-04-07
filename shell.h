@@ -16,4 +16,10 @@ void env(void);
 char *_strtok(char *str, char *delimiter);
 int _getline(char **buffer, size_t *buf_size, FILE *restrict stream);
 
+/* Memory management */
+void *allocate_memory(unsigned int bytes);
+char *duplicate_string(char *str);
+void free_dbl_ptr(char **dbl_ptr);
+
+
 #endif /* __SHELL_H */
