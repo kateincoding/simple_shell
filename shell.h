@@ -15,6 +15,12 @@ void __attribute__((destructor)) free_dynamic_environ(void);
 
 /* builtins */
 void env(void);
+int _setenv(char *name, char *value);
+
+/* builtins utils */
+int validate_env_name(char *name);
+int is_valid_env_var_name(char *name);
+int get_env_index(char *name);
 
 /* own implementations */
 char *_strtok(char *str, char *delimiter);

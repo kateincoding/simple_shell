@@ -11,9 +11,24 @@ int handle_builtins(char **commands)
 	if (commands[0] == NULL)
 		return (0);
 
-	if (commands[1] == NULL && strncmp(commands[0], "env", 3) == 0)
+	if (commands[1] == NULL && strcmp(commands[0], "env") == 0)
 	{
 		env();
+		return (1);
+	}
+
+	if (strcmp(commands[0], "setenv") == 0)
+	{
+		char *err_msg;
+
+		if (commands[1] == NULL || commands[2] == NULL || commands[3] != NULL)
+		{
+			err_msg = "Error: setenv command needs exactly two arguments\n";
+			write(STDOUT_FILENO, err_msg, strlen(err_msg));
+			return (1);
+		}
+
+		_setenv(commands[1], commands[2]);
 		return (1);
 	}
 
