@@ -14,12 +14,17 @@ void env(void);
 
 /* own implementations */
 char *_strtok(char *str, char *delimiter);
-int _getline(char **buffer, size_t *buf_size, FILE *restrict stream);
+int _getline(char **buffer, size_t *buf_size, FILE *stream);
 
 /* Memory management */
 void *allocate_memory(unsigned int bytes);
 char *duplicate_string(char *str);
 void free_dbl_ptr(char **dbl_ptr);
+
+/* Exit handlers */
+int handle_exit(char *buff, char **commands);
+int get_exit_status(char *buff);
+void print_Illegal_exit_status(char *status_str);
 
 
 #endif /* __SHELL_H */
