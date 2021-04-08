@@ -11,8 +11,11 @@ int handle_builtins(char **commands)
 	if (commands[0] == NULL)
 		return (0);
 
-	if (commands[1] == NULL && strcmp(commands[0], "env") == 0)
+	if (strcmp(commands[0], "env") == 0)
 	{
+		if (commands[1] != NULL)
+			return (0);
+
 		env();
 		return (1);
 	}
@@ -44,6 +47,20 @@ int handle_builtins(char **commands)
 		}
 
 		_unsetenv(commands[1]);
+		return (1);
+	}
+
+	if (strcmp(commands[0], "cd") == 0)
+	{
+		char *path = commands[1];
+
+		if (commands[1] == NULL)
+			path = getenv("HOME");
+
+		if (path == NULL)
+			path = "/";
+
+		_cd(path);
 		return (1);
 	}
 

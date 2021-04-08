@@ -83,7 +83,56 @@ int _unsetenv(char *name)
 		return (1);
 	}
 
-	/* Var doen't exist, we can print error or do nothing */
+	/* Var doesn't exist, we can print error or do nothing */
+
+	return (1);
+}
+
+/**
+ * _cd - Changes the current directory of the process
+ * @path: Path to wich change the working directory
+ *
+ * Return: 1 on success, -1 on error
+*/
+int _cd(char *path)
+{
+	char buff[1024];
+	char *oldpwd, *err_msg;
+
+	if (strcmp(path, "-") == 0)
+		path = getenv("OLDPWD");
+
+	if (path == NULL)
+	{
+		err_msg = "Error: cd: OLDPWD not set\n";
+		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		return (-1);
+	}
+
+	/* Needed to avoid reading on freed memory */
+	path = duplicate_string(path);
+	/* store this dir in case of update */
+	oldpwd = getcwd(buff, 1024);
+	if (oldpwd == NULL)
+	{
+		err_msg = "Error while getting current directory\n";
+		free(path);
+		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		return (-1);
+	}
+	/* Try to change the current dir */
+	if (chdir(path) == -1)
+	{
+		free(path);
+		perror("Error while changing dir");
+		return (-1);
+	}
+
+	/* Update env variables */
+	_setenv("OLDPWD", oldpwd);
+	_setenv("PWD", path);
+
+	free(path);
 
 	return (1);
 }
