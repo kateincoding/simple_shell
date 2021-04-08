@@ -3,14 +3,15 @@
 /**
  * parse_user_input - Buidls an array of strings as arguments
  * @str_input: Command input given by the user
+ * @delimiter: String od chars indicating the delimiters
  *
  * Return: Array of strings
 */
-char **parse_user_input(char *str_input)
+char **parse_user_input(char *str_input, char *delimiter)
 {
 	int i, args_count = 0;
 	char **args;
-	char *token, *tkn_ptr, *delimiter = " ";
+	char *token, *tkn_ptr;
 	char *str_copy;
 
 	if (str_input == NULL)

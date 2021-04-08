@@ -1,7 +1,8 @@
 #include "shell.h"
 
 /*function with all the logical part that will work with the main */
-void execute_commands(char *buff, int read, char *first_av);
+void execute_commands(char *buff, char **cmds_list, char *cmd,
+											int read, char *first_av);
 void execute_handling_semicolon(char *buff, int read, char *first_av);
 
 /**
@@ -44,68 +45,44 @@ int main(int __attribute__((unused))ac, char **av)
 */
 void execute_handling_semicolon(char *buff, int read, char *first_av)
 {
-	char *block = _strtok(buff, ";");
-	list_t *head, *tmp_head;
+	int i;
+	char **cmds_list = parse_user_input(buff, ";");
 
-	head = NULL;
-	if (block[0] == '\n')
-	{
-/*		puts(" retorna salto de linea");*/
-		return;
-	}
-	/* Create a linked list for the blocks and allocate in the first while */
-	while (block != NULL)
-        {       
-                /*printf("block = '%s'\n", block);*/
-		add_node_end(&head, block);
-                block = _strtok(NULL, ";");
-                /*printf("block after strtok = '%s'\n", block);*/
-        }
-	/*print_list(head);*/
-	/* asignamos un tmp head para no perder el head */
-	tmp_head = &*head;
+	for (i = 0; cmds_list[i] != NULL; i++)
+		execute_commands(buff, cmds_list, cmds_list[i], read, first_av);
 
-	while (tmp_head)
-	{
-		/*char *tmp = _strdup(block);*/
-		execute_commands(tmp_head->str, read, first_av);
-		/*printf("block = '%s'\n", block);*/
-		block = _strtok(NULL, ";");
-		/*printf("block after strtok = '%s'\n", block);*/
-		/*free (tmp);*/
-		tmp_head = tmp_head->next;
-	}
-	free_list(tmp_head);
-	free_list(head);
-	head = NULL;	
+	free_dbl_ptr(cmds_list);
 }
 
 /**
  * execute_commands - Fork and create commands, child process and executed
  * @buff: first buffer that function read
+ * @cmds_list: List of commands
+ * @cmd: Single command as a string
  * @read: return of read (open with getline)
  * @first_av: av[0]
  * Return: 0 on success
 */
-void execute_commands(char *buff, int read, char *first_av)
+void execute_commands(char *buff, char **cmds_list, char *cmd,
+	int read, char *first_av)
 {
 	int child_pid;
 	char **commands;
 
 	/* Generate array of commands */
-	commands = parse_user_input(buff);
+	commands = parse_user_input(cmd, " ");
 	if (read == EOF)
 	{
-		free(buff);
-		free_dbl_ptr(commands);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		exit(0);
 	}
 	/* Exit error, ENTER, and builtins */
-	if (handle_exit(buff, commands) == -1 ||
-	handle_enter(commands) == 1	||
-	handle_builtins(commands) == 1)
+	if (handle_exit(cmd, commands) == -1 ||
+			handle_enter(commands) == 1	||
+			handle_builtins(commands) == 1)
 	{
 		free_dbl_ptr(commands);
+		return;
 	}
 	/* Fork parent process to execute the command */
 	child_pid = fork();
@@ -120,12 +97,28 @@ void execute_commands(char *buff, int read, char *first_av)
 		/* execute command */
 		execve(commands[0], commands, NULL);
 		/* free memory */
-		free(buff);
-		free_dbl_ptr(commands);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		/* handle errors */
 		dispatch_error(first_av, 1);
 	}
-	else
-		wait(NULL);
+
+	wait(NULL);
 	free_dbl_ptr(commands);
+}
+
+/**
+ * free_allocs - Frees allocated memory
+ * @buff: Main buffer
+ * @cmds_list: List of commands
+ * @commands: Command as an array of arguments
+ * @flags: Number indicating which memory to free
+*/
+void free_allocs(char *buff, char **cmds_list, char **commands, int flags)
+{
+	if (flags & F_BUFF)
+		free(buff);
+	if (flags & F_CMD_L)
+		free_dbl_ptr(cmds_list);
+	if (flags & F_CMDS)
+		free_dbl_ptr(commands);
 }

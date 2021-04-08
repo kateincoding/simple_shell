@@ -11,6 +11,11 @@
 
 #include <stddef.h>
 
+/* FLAGS */
+#define F_BUFF 1
+#define F_CMD_L 2
+#define F_CMDS 4
+
 /**
  * struct list_s - singly linked list
  * @str: string - (malloc'ed string)
@@ -54,7 +59,7 @@ int _getline(char **buffer, size_t *buf_size, FILE *stream);
 /* Command handlers */
 void handle_PATH(char **commands);
 char *getpath(char *dir, char *filename);
-char **parse_user_input(char *str_input);
+char **parse_user_input(char *str_input, char *delimiter);
 int count_args(char *str_input, char *delimiter);
 
 /* Memory management */
