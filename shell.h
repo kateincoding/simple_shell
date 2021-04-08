@@ -43,6 +43,8 @@ int handle_builtins(char **commands);
 
 /* handle_enter */
 int handle_enter(char **commands);
+/* handle comments in input */
+char *handle_comment(char *str_input);
 
 /* Exit handlers */
 int handle_exit(char *buff, char **commands);
