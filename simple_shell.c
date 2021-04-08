@@ -105,20 +105,3 @@ void execute_commands(char *buff, char **cmds_list, char *cmd,
 	wait(NULL);
 	free_dbl_ptr(commands);
 }
-
-/**
- * free_allocs - Frees allocated memory
- * @buff: Main buffer
- * @cmds_list: List of commands
- * @commands: Command as an array of arguments
- * @flags: Number indicating which memory to free
-*/
-void free_allocs(char *buff, char **cmds_list, char **commands, int flags)
-{
-	if (flags & F_BUFF)
-		free(buff);
-	if (flags & F_CMD_L)
-		free_dbl_ptr(cmds_list);
-	if (flags & F_CMDS)
-		free_dbl_ptr(commands);
-}

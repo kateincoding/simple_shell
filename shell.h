@@ -66,6 +66,7 @@ int count_args(char *str_input, char *delimiter);
 void *allocate_memory(unsigned int bytes);
 char *duplicate_string(char *str);
 void free_dbl_ptr(char **dbl_ptr);
+void free_allocs(char *buff, char **cmds_list, char **commands, int flags);
 
 /* handle_builtins */
 int handle_builtins(char **commands);
