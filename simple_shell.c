@@ -23,7 +23,8 @@ int main(int __attribute__((unused))ac, char **av)
 			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
-		/* Remove '\n' char from buffer */
+		/* Remove comments & '\n' char from buffer */
+		buff = handle_comment(buff);
 		_strtok(buff, "\n");
 		/* Generate array of commands */
 		commands = parse_user_input(buff);
