@@ -69,22 +69,27 @@ int count_args(char *str_input, char *delimiter)
 /**
  * handle_PATH - Checks if the command to execute could be found in PATH's dirs
  * @commands: Array of strings containing the command and args
+ * Return: flag 0 if is succes; -1 if is error
 */
-void handle_PATH(char **commands)
+int handle_PATH(char **commands)
 {
 	char *path_dirs, *path;
 	char *tkn, *tkn_ptr;
 	char *str_copy;
+	int flag = -1;
 
 	if (
 		commands == NULL || commands[0] == NULL ||
 		commands[0][0] == '\0' || commands[0][0] == '/'
 	)
-		return;
+		return(-1);
 
 	path_dirs = getenv("PATH");
 	if (path_dirs == NULL)
+	{
 		dispatch_error("Error", 100);
+		return (-1);
+	}
 
 	str_copy = duplicate_string(path_dirs);
 	tkn_ptr = str_copy;
@@ -100,12 +105,13 @@ void handle_PATH(char **commands)
 		{
 			free(commands[0]);
 			commands[0] = path;
+			flag = 1;
 			break;
 		}
 		free(path);
 	}
-
 	free(str_copy);
+	return (flag);
 }
 
 /**
