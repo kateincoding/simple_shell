@@ -85,11 +85,11 @@ void set_alias(char *alias_pair)
 /**
  * handle_alias_args - Evaluates alias input command and decides what to do
  * @commands: Arrays of commands
- * @out_head: Pointer to out's head node
+ * @out_addrs: Pointer to out's head node
  *
  * Return: -1 if error happens, 0 otherwise
 */
-int handle_alias_args(char **commands, list_t *out_head)
+int handle_alias_args(char **commands, list_t **out_addrs)
 {
 	int i, len, was_alias;
 	int status = 0;
@@ -106,7 +106,7 @@ int handle_alias_args(char **commands, list_t *out_head)
 			if (strncmp(curr->str, commands[i], len) == 0 && (curr->str)[len] == '=')
 			{ /* Means to list an alias */
 				was_alias = 1;
-				add_node_end(&out_head, curr->str);
+				add_node_end(out_addrs, curr->str);
 				break;
 			}
 		}
@@ -123,4 +123,41 @@ int handle_alias_args(char **commands, list_t *out_head)
 	}
 
 	return (status);
+}
+
+/**
+ * handle_aliases - Handle alias replacement
+ * @commands: Arrays of commands
+*/
+void handle_aliases(char **commands)
+{
+	list_t *curr;
+	list_t **alias_addrs = get_alias_head();
+	int cmd_len = strlen(commands[0]);
+	char *str;
+	char tmp_buff[250];
+	int i, alias_len = 0;
+
+	if (commands[0] == NULL)
+		return;
+
+	/* Initialize buffer */
+	for (i = 0; i < 250; i++)
+		tmp_buff[i] = '\0';
+
+	/* Search if a command is an alias */
+	for (curr = *alias_addrs; curr != NULL; curr = curr->next)
+	{
+		str = curr->str;
+		if (strncmp(commands[0], str, cmd_len) == 0 && str[cmd_len] == '=')
+		{ /* the command is an alias */
+			alias_len = strlen(&str[cmd_len + 2]); /* +2 beacause of "='" chars */
+			strncpy(tmp_buff, &str[cmd_len + 2], alias_len - 1);
+			tmp_buff[alias_len] = '\0';
+			/* Free and then update the command */
+			free(commands[0]);
+			commands[0] = duplicate_string(tmp_buff);
+			break;
+		}
+	}
 }

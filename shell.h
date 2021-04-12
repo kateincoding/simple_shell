@@ -63,7 +63,7 @@ int is_valid_env_var_name(char *name);
 int get_env_index(char *name);
 void set_alias(char *alias_pair);
 int is_set_alias(char *alias_pair);
-int handle_alias_args(char **commands, list_t *out_head);
+int handle_alias_args(char **commands, list_t **out_addrs);
 
 /* own implementations */
 char *_strtok(char *str, char *delimiter);

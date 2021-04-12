@@ -158,7 +158,7 @@ int _alias(char **commands)
 		return (1);
 	}
 	/* List aliases and sets the aliases that have the form name=value */
-	status = handle_alias_args(commands, out_head);
+	status = handle_alias_args(commands, &out_head);
 	/* print listed alias */
 	for (curr = out_head; curr != NULL; curr = curr->next)
 		printf("%s\n", curr->str);
