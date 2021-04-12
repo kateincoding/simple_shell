@@ -54,7 +54,7 @@ int print_line(const int fd, char **line)
 			str[fd] = _strdup(buffer);
 		else
 		{
-			tmp = _strjoin(str[fd], buffer);
+			tmp = f_strjoin(str[fd], buffer);
 			free(str[fd]);
 			str[fd] = tmp;
 		}

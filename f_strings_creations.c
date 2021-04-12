@@ -1,17 +1,12 @@
 #include "shell.h"
 
-/* f_strings_creations */
-char *f_strjoin(char const *s1, char const *s2);
-char *f_strsub(char const *s, unsigned int start, size_t len);
-void f_strdel(char **as);
-
 /**
  * _strjoin - concatenates string 1 + string 2
  * @s1: string 1
  * @s2: string 2
  * Return: copy of string with null terminated char
  */
-char *_strjoin(char const *s1, char const *s2)
+char *f_strjoin(char const *s1, char const *s2)
 {
 	size_t	l3;
 	char	*s3;
@@ -75,5 +70,5 @@ void f_memdel(void **ap)
  */
 void f_strdel(char **as)
 {
-	ft_memdel((void **)as);
+	f_memdel((void **)as);
 }
