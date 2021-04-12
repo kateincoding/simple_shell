@@ -51,6 +51,10 @@ int handling_and(char *buff_semicolon, int read,
 void __attribute__((constructor)) build_dynamic_environ(void);
 void __attribute__((destructor)) free_dynamic_environ(void);
 
+/* replacement variables */
+void handle_var_replacement(char **commands);
+int *process_exit_code();
+
 /* builtins */
 void env(void);
 int _setenv(char *name, char *value);
@@ -58,6 +62,8 @@ int _unsetenv(char *name);
 int _cd(char *path);
 int _alias(char **commands);
 list_t **get_alias_head();
+/* help functions */
+int _help(char **commands);
 
 /* builtins utils */
 int validate_env_name(char *name);
@@ -108,13 +114,11 @@ char *_strdup(const char *s1);
 char *_strchr(const char *s, int c);
 char *_strcat(char *s1, const char *s2);
 char *_strncat(char *s1, const char *s2, size_t n);
+char *num_to_str(int num);
 
 /* f_strings_creations */
 char *f_strjoin(char const *s1, char const *s2);
 char *f_strsub(char const *s, unsigned int start, size_t len);
 void f_strdel(char **as);
-
-/* help functions */
-int _help(char **commands);
 
 #endif /* __SHELL_H */

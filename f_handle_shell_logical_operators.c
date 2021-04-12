@@ -89,8 +89,11 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 	int flag = 0;
 	char **commands;
 
+	int *status = process_exit_code();
+
 	/* Generate array of commands */
 	commands = parse_user_input(cmd, " ");
+	handle_var_replacement(commands);
 	handle_aliases(commands);
 	if (read == EOF)
 	{
@@ -125,7 +128,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		/* handle errors */
 		dispatch_error(first_av, 1);
 	}
-	wait(NULL);
+	wait(status);
 	free_dbl_ptr(commands);
 	return (flag);
 }
