@@ -28,6 +28,7 @@ int handle_builtins(char **commands)
 		{
 			err_msg = "Error: setenv command needs exactly two arguments\n";
 			write(STDOUT_FILENO, err_msg, strlen(err_msg));
+			set_process_exit_code(1);
 			return (1);
 		}
 
@@ -43,6 +44,7 @@ int handle_builtins(char **commands)
 		{
 			err_msg = "Error: unsetenv command needs exactly one argument\n";
 			write(STDOUT_FILENO, err_msg, strlen(err_msg));
+			set_process_exit_code(1);
 			return (1);
 		}
 

@@ -115,7 +115,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 	/* Fork parent process to execute the command */
 	child_pid = fork();
 	if (child_pid == -1)
-		dispatch_error(first_av, 1);
+		dispatch_error(first_av);
 	else if (child_pid == 0)
 	{
 		/* Search command using the PATH env variable */
@@ -126,7 +126,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		free_list(*(get_alias_head()));
 		/* handle errors */
-		dispatch_error(first_av, 1);
+		dispatch_error(first_av);
 	}
 	wait(status);
 	free_dbl_ptr(commands);

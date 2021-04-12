@@ -11,7 +11,7 @@ void *allocate_memory(unsigned int bytes)
 	char *new_mem = malloc(bytes);
 
 	if (new_mem == NULL)
-		dispatch_error("Error while allocating memory\n", 100);
+		dispatch_error("Error while allocating memory\n");
 
 	return (new_mem);
 }
@@ -27,7 +27,7 @@ char *duplicate_string(char *str)
 	char *str_copy = strdup(str);
 
 	if (str_copy == NULL)
-		dispatch_error("Error while making copy of string", 100);
+		dispatch_error("Error while making copy of string");
 
 	return (str_copy);
 }

@@ -3,10 +3,9 @@
 /**
  * dispatch_error - Dispatches an error
  * @msg: Message to print as error
- * @status: Integer representing the error code
 */
-void dispatch_error(char *msg, int status)
+void dispatch_error(char *msg)
 {
 	perror(msg);
-	exit(status);
+	exit(*process_exit_code());
 }

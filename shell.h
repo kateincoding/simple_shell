@@ -54,6 +54,7 @@ void __attribute__((destructor)) free_dynamic_environ(void);
 /* replacement variables */
 void handle_var_replacement(char **commands);
 int *process_exit_code();
+void set_process_exit_code(int code);
 
 /* builtins */
 void env(void);
@@ -106,7 +107,7 @@ int get_exit_status(char *buff);
 void print_Illegal_exit_status(char *status_str);
 
 /* Error handlers */
-void dispatch_error(char *msg, int status);
+void dispatch_error(char *msg);
 
 /* strings functions */
 int _strlen(const char *s);

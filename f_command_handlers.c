@@ -15,7 +15,7 @@ char **parse_user_input(char *str_input, char *delimiter)
 	char *str_copy;
 
 	if (str_input == NULL)
-		dispatch_error("Error while parsing the command\n", 100);
+		dispatch_error("Error while parsing the command\n");
 
 	/* Count the number of arguments present in the input */
 	args_count = count_args(str_input, delimiter);
@@ -87,7 +87,7 @@ int handle_PATH(char **commands)
 	path_dirs = getenv("PATH");
 	if (path_dirs == NULL)
 	{
-		dispatch_error("Error", 100);
+		dispatch_error("Error");
 		return (-1);
 	}
 

@@ -39,7 +39,7 @@ int _setenv(char *name, char *value)
 
 		__environ = realloc(__environ, sizeof(char *) * (env_count + 2));
 		if (__environ == NULL)
-			dispatch_error("Error while reallocating memory for new env var", 2);
+			dispatch_error("Error while reallocating memory for new env var");
 
 		/* The new value will be stored at index env_count */
 		env_index = env_count;
