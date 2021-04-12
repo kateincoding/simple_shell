@@ -26,7 +26,7 @@ void handling_semicolon_and_operators(char *buff, int read, char *first_av)
 */
 void handling_or(char *buff_semicolon, int read, char *first_av)
 {
-	int i, result = 0, flag, prev_flag = -1;
+	int i, flag, prev_flag = -1;
 	char **cmds_list_2 = parse_user_input(buff_semicolon, "||");
 
 	for (i = 0; cmds_list_2[i] != NULL; i++)
@@ -48,7 +48,7 @@ void handling_or(char *buff_semicolon, int read, char *first_av)
 */
 int handling_and(char *buff_or, int read, char *first_av, int prev_flag)
 {
-	int j = 0, result, flag = 1;
+	int j = 0, flag = 1;
 	char **cmds_list_3 = parse_user_input(buff_or, "&&");
 
 	/* logical part: if the last || is success, */
@@ -57,10 +57,7 @@ int handling_and(char *buff_or, int read, char *first_av, int prev_flag)
 	{
 		j++;
 		if (cmds_list_3[j] == NULL)
-		{
-			flag == prev_flag;
 			return (-1);
-		}
 	}
 
 	for (; cmds_list_3[j] != NULL; j++)
@@ -121,6 +118,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		execve(commands[0], commands, NULL);
 		/* free memory */
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		free_list(*(get_alias_head()));
 		/* handle errors */
 		dispatch_error(first_av, 1);
 	}
