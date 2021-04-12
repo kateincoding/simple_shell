@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void handle_aliases(char **commands);
+
 /**
  * handling_semicolon_and_operators - Handle semicolon and logical op
  * @buff: first buffer that functions read
@@ -89,6 +91,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 
 	/* Generate array of commands */
 	commands = parse_user_input(cmd, " ");
+	handle_aliases(commands);
 	if (read == EOF)
 	{
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
