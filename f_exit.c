@@ -20,6 +20,7 @@ int handle_exit(char *buff, char **commands)
 	{
 		free(buff);
 		free_dbl_ptr(commands);
+		free_list(*(get_alias_head()));
 		exit(0);
 	}
 
@@ -29,6 +30,7 @@ int handle_exit(char *buff, char **commands)
 	{
 		free(buff);
 		free_dbl_ptr(commands);
+		free_list(*(get_alias_head()));
 		exit(status);
 	}
 
