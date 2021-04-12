@@ -4,7 +4,6 @@
  ## Table of Contents
 * [Introduction](#Introduction)
   * What is Shell
-  * What is it for
 * [Project Information](#Project-Information)
     * General requirements
     * Allowed functions
