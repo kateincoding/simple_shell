@@ -64,5 +64,11 @@ int handle_builtins(char **commands)
 		return (1);
 	}
 
+	if (strcmp(commands[0], "alias") == 0)
+	{
+		_alias(commands);
+		return (1);
+	}
+
 	return (0);
 }
