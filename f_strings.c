@@ -38,21 +38,11 @@ char *_strdup(const char *s1)
 }
 
 /**
- * _strcmp - compare if is equal 2 strings
- * @s1: string1
- * @s2: string2
- * Return: 0 success; else pointer 
- */
-int	_strcmp(const char *s1, const char *s2)
-{
-	return (_strncmp(s1, s2, (size_t)-1));
-}
-
-/**
  * _strncmp - compare if is equal 2 strings, first n chars
  * @s1: string1
  * @s2: string2
- * Return: 0 success; else pointer 
+ * @n: n first characters
+ * Return: 0 success; else pointer
  */
 int	_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -65,4 +55,15 @@ int	_strncmp(const char *s1, const char *s2, size_t n)
 	if (i == n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+/**
+ * _strcmp - compare if is equal 2 strings
+ * @s1: string1
+ * @s2: string2
+ * Return: 0 success; else pointer
+ */
+int     _strcmp(const char *s1, const char *s2)
+{
+		return (_strncmp(s1, s2, (size_t)-1));
 }
