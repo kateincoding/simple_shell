@@ -1,37 +1,6 @@
 #include "shell.h"
 #define BUFF_SIZE 32
 
-/* functions that is part of help */
-int print_line(const int fd, char **line);
-static int f_read_line(char **str, char **line, int fd);
-
-/**
- * _help - functions that simulate help command
- * @commands: array of strings to execute
- * Return: 0 if is positive (1 is true min.); -1 if is error
- */
-int _help(char **commands)
-{
-
-	int fd, i = 1, result = -1;
-	char *line = NULL;
-
-	while (commands[i])
-	{
-		fd = open(commands[1], O_RDONLY);
-		if (fd != -1)
-			result = 0;
-		while (print_line(fd, &line) == 1)
-		{
-			puts(line);
-			free(line);
-		}
-		i++;
-	}
-
-	return (result);
-}
-
 /**
  * print_line - print a line of fd
  * @fd: file descriptor
@@ -73,7 +42,7 @@ int print_line(const int fd, char **line)
  * @line: line of text
  * Return: 1 if success
  */
-static int	f_read_line(char **str, char **line, int fd)
+int	f_read_line(char **str, char **line, int fd)
 {
 	char	*tmp;
 	int		count;
@@ -93,4 +62,34 @@ static int	f_read_line(char **str, char **line, int fd)
 	else
 		f_strdel(&str[fd]);
 	return (1);
+}
+
+/**
+ * _help - functions that simulate help command
+ * @commands: array of strings to execute
+ * Return: 0 if is positive (1 is true min.); -1 if is error
+ */
+int _help(char **commands)
+{
+
+	int fd, i = 1, result = -1;
+	char *line = NULL;
+
+	while (commands[i])
+	{
+		fd = open(commands[i], O_RDONLY);
+		if (fd != -1)
+		{
+			result = 0;
+			while (print_line(fd, &line) == 1)
+			{
+				puts(line);
+				free(line);
+			}
+			close(fd);
+		}
+		i++;
+	}
+
+	return (result);
 }

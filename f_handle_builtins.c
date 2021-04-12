@@ -70,5 +70,11 @@ int handle_builtins(char **commands)
 		return (1);
 	}
 
+	if (strcmp(commands[0], "help") == 0)
+	{
+		_help(commands);
+		return (1);
+	}
+
 	return (0);
 }
