@@ -112,9 +112,8 @@ $
 ##|File|Description
 ---|---|---
 1|[README.md](./README.md)|Readme
-2|[man_1_simple_shell](./man_1_simple_shell)|Man page Simple Shell based in sh(1) - Linux man page
-3|[main.c](./main.c)|Entry point
-4|[shell.h](./shell.h)|Header file
+2|[main.c](./main.c)|Entry point
+3|[shell.h](./shell.h)|Header file
 
 **man or help:**
 help [cd] 
