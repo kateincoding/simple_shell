@@ -8,8 +8,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-
 #include <stddef.h>
+/* open */
+#include <sys/stat.h>
+#include <fcntl.h>
 
 /* FLAGS */
 #define F_BUFF 1
@@ -95,5 +97,16 @@ void dispatch_error(char *msg, int status);
 /* strings functions */
 int _strlen(const char *s);
 char *_strdup(const char *s1);
+char *_strchr(const char *s, int c);
+char *_strcat(char *s1, const char *s2);
+char *_strncat(char *s1, const char *s2, size_t n);
+
+/* f_strings_creations */
+char *f_strjoin(char const *s1, char const *s2);
+char *f_strsub(char const *s, unsigned int start, size_t len);
+void f_strdel(char **as);
+
+/* help functions */
+int _help(char **commands);
 
 #endif /* __SHELL_H */
