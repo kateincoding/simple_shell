@@ -62,9 +62,14 @@ int _setenv(char *name, char *value);
 int _unsetenv(char *name);
 int _cd(char *path);
 int _alias(char **commands);
-list_t **get_alias_head();
-/* help functions */
 int _help(char **commands);
+int _history(void);
+/* helper global vars builtin functions */
+list_t **get_alias_head();
+list_t **get_history_addrss();
+list_t **get_last_cmd_addrss();
+void handle_history(char *buff);
+void free_history();
 
 /* builtins utils */
 int validate_env_name(char *name);
@@ -102,7 +107,7 @@ int handle_enter(char **commands);
 char *handle_comment(char *str_input);
 
 /* Exit handlers */
-int handle_exit(char *buff, char **commands);
+int handle_exit(char *buff, char **cmds_list, char **commands);
 int get_exit_status(char *buff);
 void print_Illegal_exit_status(char *status_str);
 

@@ -85,11 +85,8 @@ int handling_and(char *buff_or, int read, char *first_av, int prev_flag)
 int execute_commands(char *buff, char **cmds_list, char *cmd,
 	int read, char *first_av)
 {
-	int child_pid;
-	int flag = 0;
 	char **commands;
-
-	int *status = process_exit_code();
+	int child_pid, flag = 0, *status = process_exit_code();
 
 	/* Generate array of commands */
 	commands = parse_user_input(cmd, " ");
@@ -101,7 +98,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		exit(0);
 	}
 	/* Exit error, ENTER, and builtins */
-	if (handle_exit(cmd, commands) == -1 ||
+	if (handle_exit(cmd, cmds_list, commands) == -1 ||
 			handle_enter(commands) == 1	||
 			handle_builtins(commands) == 1)
 	{
@@ -117,14 +114,12 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 	if (child_pid == -1)
 		dispatch_error(first_av);
 	else if (child_pid == 0)
-	{
-		/* Search command using the PATH env variable */
+	{ /* Search command using the PATH env variable */
 		handle_PATH(commands);
 		/* execute command */
 		execve(commands[0], commands, NULL);
 		/* free memory */
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		free_list(*(get_alias_head()));
 		/* handle errors */
 		dispatch_error(first_av);
 	}

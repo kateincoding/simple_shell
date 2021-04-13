@@ -7,7 +7,7 @@
  *
  * Return: 0 if the commad is NOT exit, -1 if the exit status was Illegal
 */
-int handle_exit(char *buff, char **commands)
+int handle_exit(char *buff, char **cmds_list, char **commands)
 {
 	int status;
 
@@ -18,9 +18,7 @@ int handle_exit(char *buff, char **commands)
 	/* Command is exit */
 	if (commands[1] == NULL)
 	{
-		free(buff);
-		free_dbl_ptr(commands);
-		free_list(*(get_alias_head()));
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		exit(0);
 	}
 
@@ -28,9 +26,7 @@ int handle_exit(char *buff, char **commands)
 	/* Command is exit status */
 	if (status >= 0)
 	{
-		free(buff);
-		free_dbl_ptr(commands);
-		free_list(*(get_alias_head()));
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		exit(status);
 	}
 

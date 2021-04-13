@@ -21,6 +21,7 @@ int main(int __attribute__((unused))ac, char **av)
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		/* Remove comments & '\n' char from buffer */
+		handle_history(buff);
 		buff = handle_comment(buff);
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */

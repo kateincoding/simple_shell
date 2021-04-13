@@ -78,5 +78,17 @@ int handle_builtins(char **commands)
 		return (1);
 	}
 
+	if (strcmp(commands[0], "history") == 0)
+	{
+		if (commands[1] != NULL)
+		{
+			print_builtin_error("Error: history doesn't need any argument\n");
+			return (1);
+		}
+
+		_history();
+		return (1);
+	}
+
 	return (0);
 }
