@@ -71,15 +71,15 @@ int get_exit_status(char *buff)
 */
 void print_Illegal_exit_status(char *status_str)
 {
-	char *err = "exit: Illegal number: ";
-	int err1_len = strlen(err);
-	int err2_len = strlen(status_str);
-	char *err_msg = allocate_memory(sizeof(char *) * (err1_len + err2_len + 2));
+	int i;
+	char err_msg[50];
 
-	strcpy(err_msg, err);
+	for (i = 0; i < 50; i++)
+		err_msg[i] = '\0';
+
+	strcpy(err_msg, "exit: Illegal number: ");
 	strcat(err_msg, status_str);
 	strcat(err_msg, "\n");
 	/* Print error message */
-	write(STDOUT_FILENO, err_msg, err1_len + err2_len + 1);
-	free(err_msg);
+	print_builtin_error(err_msg);
 }

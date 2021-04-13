@@ -108,6 +108,7 @@ void print_Illegal_exit_status(char *status_str);
 
 /* Error handlers */
 void dispatch_error(char *msg);
+void print_builtin_error(char *msg);
 
 /* strings functions */
 int _strlen(const char *s);
