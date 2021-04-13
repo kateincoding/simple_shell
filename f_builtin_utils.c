@@ -14,6 +14,7 @@ int validate_env_name(char *name)
 	{
 		err_msg = "Error: name must be some string\n";
 		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		set_process_exit_code(1);
 		return (-1);
 	}
 
@@ -21,6 +22,7 @@ int validate_env_name(char *name)
 	{
 		err_msg = "Error: Invalid name for environment variable\n";
 		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		set_process_exit_code(1);
 		return (-1);
 	}
 

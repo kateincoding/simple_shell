@@ -7,5 +7,5 @@
 void dispatch_error(char *msg)
 {
 	perror(msg);
-	exit(*process_exit_code());
+	exit(errno);
 }

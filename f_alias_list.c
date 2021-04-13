@@ -96,6 +96,7 @@ int handle_alias_args(char **commands, list_t **out_addrs)
 	list_t *curr;
 	list_t **alias_addrs = get_alias_head();
 
+	set_process_exit_code(0);
 	for (i = 1; commands[i] != NULL; i++)
 	{
 		was_alias = 0;
@@ -118,6 +119,7 @@ int handle_alias_args(char **commands, list_t **out_addrs)
 		else /* Print errors */
 		{
 			status = -1;
+			set_process_exit_code(1);
 			printf("alias: %s not found\n", commands[i]);
 		}
 	}

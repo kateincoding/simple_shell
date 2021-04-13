@@ -13,6 +13,8 @@ void env(void)
 		write(STDOUT_FILENO, env[i], strlen(env[i]));
 		write(STDOUT_FILENO, "\n", 1);
 	}
+
+	set_process_exit_code(0);
 }
 
 /**
@@ -59,6 +61,7 @@ int _setenv(char *name, char *value)
 	strcat(__environ[env_index], "=");
 	strcat(__environ[env_index], value);
 
+	set_process_exit_code(0);
 	return (1);
 }
 
@@ -80,10 +83,12 @@ int _unsetenv(char *name)
 		for (i = env_index; __environ[i] != NULL; i++)
 			__environ[i] = __environ[i + 1];
 
+		set_process_exit_code(0);
 		return (1);
 	}
 
 	/* Var doesn't exist, we can print error or do nothing */
+	set_process_exit_code(0); /* Indicates that no error ocurred */
 
 	return (1);
 }
@@ -106,9 +111,9 @@ int _cd(char *path)
 	{
 		err_msg = "Error: cd: OLDPWD not set\n";
 		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		set_process_exit_code(1);
 		return (-1);
 	}
-
 	/* Needed to avoid reading on freed memory */
 	path = duplicate_string(path);
 	/* store this dir in case of update */
@@ -118,6 +123,7 @@ int _cd(char *path)
 		err_msg = "Error while getting current directory\n";
 		free(path);
 		write(STDOUT_FILENO, err_msg, strlen(err_msg));
+		set_process_exit_code(1);
 		return (-1);
 	}
 	/* Try to change the current dir */
@@ -125,15 +131,14 @@ int _cd(char *path)
 	{
 		free(path);
 		perror("Error while changing dir");
+		set_process_exit_code(1);
 		return (-1);
 	}
-
 	/* Update env variables */
 	_setenv("OLDPWD", oldpwd);
 	_setenv("PWD", path);
-
 	free(path);
-
+	set_process_exit_code(0);
 	return (1);
 }
 
@@ -155,6 +160,7 @@ int _alias(char **commands)
 	{ /* This means to list all the aliases */
 		for (curr = *alias_addrs; curr != NULL; curr = curr->next)
 			printf("%s\n", curr->str);
+		set_process_exit_code(0);
 		return (1);
 	}
 	/* List aliases and sets the aliases that have the form name=value */
