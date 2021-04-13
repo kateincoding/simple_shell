@@ -60,7 +60,7 @@ list_t *add_node_end(list_t **head, const char *str)
  */
 void free_list(list_t *head)
 {
-	if (head == 0)
+	if (head == NULL)
 		return;
 	free_list(head->next);
 	free(head->str);

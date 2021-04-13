@@ -12,6 +12,7 @@
 /* open */
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 /* FLAGS */
 #define F_BUFF 1
@@ -69,7 +70,8 @@ list_t **get_alias_head();
 list_t **get_history_addrss();
 list_t **get_last_cmd_addrss();
 void handle_history(char *buff);
-void free_history();
+void free_history(void);
+void write_history(void);
 
 /* builtins utils */
 int validate_env_name(char *name);

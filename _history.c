@@ -57,6 +57,7 @@ int _history(void)
 		write(STDOUT_FILENO, str_num, len);
 		write(STDOUT_FILENO, "  ", 2);
 		write(STDOUT_FILENO, curr->str, curr->len);
+		free(str_num);
 	}
 
 	return (1);
@@ -69,12 +70,14 @@ int _history(void)
 void handle_history(char *buff)
 {
 	/* Only adds a command if is different from the previous one */
-	if (last_cmd == NULL || strcmp(last_cmd->str, buff) != 0)
-		last_cmd = add_node_end(&history_head, buff);
+	if (last_cmd == NULL || buff[0] != ' ' || strcmp(last_cmd->str, buff) != 0)
+		last_cmd = add_node_end(get_history_addrss(), buff);
 }
 
+/**
+ * free_history - Frees the memory used by history list
+*/
 void free_history(void)
 {
-	printf("freeing history\n");
-	free_list(history_head);
+	free_list(*get_history_addrss());
 }

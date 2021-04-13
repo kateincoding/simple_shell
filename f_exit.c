@@ -3,6 +3,7 @@
 /**
  * handle_exit - Checks if the user entered the exit command
  * @buff: User's input
+ * @cmds_list: Array of parsed commands
  * @commands: User's input parsed as array of commands
  *
  * Return: 0 if the commad is NOT exit, -1 if the exit status was Illegal
@@ -18,7 +19,8 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	/* Command is exit */
 	if (commands[1] == NULL)
 	{
-		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		write_history();
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMDS);
 		exit(0);
 	}
 
@@ -26,7 +28,8 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	/* Command is exit status */
 	if (status >= 0)
 	{
-		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		write_history();
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMDS);
 		exit(status);
 	}
 
