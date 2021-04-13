@@ -48,15 +48,12 @@ int _history(void)
 {
 	list_t *curr;
 	char *str_num;
-	int count = 0, len;
+	int count = 0;
 
 	for (curr = *get_history_addrss(); curr != NULL; curr = curr->next)
 	{
 		str_num = num_to_str(count++);
-		len = strlen(str_num);
-		write(STDOUT_FILENO, str_num, len);
-		write(STDOUT_FILENO, "  ", 2);
-		write(STDOUT_FILENO, curr->str, curr->len);
+		printf("%5s  %s", str_num, curr->str);
 		free(str_num);
 	}
 
