@@ -1,5 +1,7 @@
 #include "shell.h"
 
+void sigintHandler(int sig_num);
+
 /**
  * main - Entry point
  * @ac: number of arguments
@@ -21,7 +23,9 @@ int main(int __attribute__((unused))ac, char **av)
 		/* Read commands from console */
 		read = getline(&buff, &buff_len, stdin);
 		/* Remove comments & '\n' char from buffer */
+		signal(SIGINT, sigintHandler);
 		buff = handle_comment(buff);
+		
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */
 		handling_semicolon_and_operators(buff, read, av[0]);
@@ -29,4 +33,9 @@ int main(int __attribute__((unused))ac, char **av)
 	/* Free buffer memory */
 	free(buff);
 	return (0);
+}
+
+void sigintHandler(int sig_num)
+{
+	write(STDOUT_FILENO, "", 0);
 }
