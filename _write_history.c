@@ -21,7 +21,10 @@ void write_history(void)
 		return;
 
 	for (curr = *get_history_addrss(); curr != NULL; curr = curr->next)
+	{
 		write(fd, curr->str, curr->len);
+		write(fd, "\n", 1);
+	}
 
 	close(fd);
 }
