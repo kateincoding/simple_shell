@@ -48,7 +48,7 @@ int _history(void)
 {
 	list_t *curr;
 	char *str_num;
-	int count = 0;
+	int count = *get_history_lines_count() % 4096;
 
 	for (curr = *get_history_addrss(); curr != NULL; curr = curr->next)
 	{

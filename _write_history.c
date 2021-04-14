@@ -8,13 +8,13 @@ void write_history(void)
 	list_t *curr;
 	int fd;
 	char *home;
-	
+
 	home = getenv("HOME");
 	if (home == NULL)
 		home = "/";
 
 	if (chdir(home) == -1)
-		return NULL;
+		return;
 
 	fd = open(".simple_shell_history", O_CREAT | O_RDWR | O_APPEND, 0666);
 	if (fd == -1)

@@ -13,6 +13,8 @@ int main(int __attribute__((unused))ac, char **av)
 	char *buff = NULL;
 	size_t buff_len = 0;
 
+	update_count_lines();
+
 	while (1)
 	{
 		/* Print console symbol only if it is interactive*/

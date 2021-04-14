@@ -72,6 +72,8 @@ list_t **get_last_cmd_addrss();
 void handle_history(char *buff);
 void free_history(void);
 void write_history(void);
+void update_count_lines(void);
+int *get_history_lines_count();
 
 /* builtins utils */
 int validate_env_name(char *name);
