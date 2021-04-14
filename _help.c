@@ -2,12 +2,12 @@
 #define BUFF_SIZE 32
 
 /**
- * print_line - print a line of fd
+ * read_line - print a line of fd
  * @fd: file descriptor
  * @line: line of text
  * Return: execution of read_line: 1 if success
  */
-int print_line(const int fd, char **line)
+int read_line(const int fd, char **line)
 {
 	int			reader;
 	char		*tmp;
@@ -31,7 +31,7 @@ int print_line(const int fd, char **line)
 			break;
 	}
 	if (str[fd] == NULL && reader == 0)
-		return (0);
+		return (-1);
 	return (f_read_line(str, line, fd));
 }
 
@@ -81,7 +81,7 @@ int _help(char **commands)
 		if (fd != -1)
 		{
 			result = 0;
-			while (print_line(fd, &line) == 1)
+			while (read_line(fd, &line) == 1)
 			{
 				puts(line);
 				free(line);

@@ -83,7 +83,7 @@ void set_alias(char *alias_pair);
 int is_set_alias(char *alias_pair);
 int handle_alias_args(char **commands, list_t **out_addrs);
 /* functions that is part of help */
-int print_line(const int fd, char **line);
+int read_line(const int fd, char **line);
 int f_read_line(char **str, char **line, int fd);
 
 /* own implementations */
