@@ -1,7 +1,7 @@
 #include "shell.h"
 
 int handle_arguments(int ac, char **av, int *exec_file);
-void handle_signal(void);
+void handle_signal(int num);
 
 /**
  * main - Entry point
@@ -75,6 +75,7 @@ int handle_arguments(int ac, char **av, int *exec_file)
 /**
  * handle_signal - Avoids current process to finish
 */
-void handle_signal(void)
+void handle_signal(int __attribute__((unused))num)
 {
+	write(STDIN_FILENO, "\n#cisfun$ ", 10);
 }
