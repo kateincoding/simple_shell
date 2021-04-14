@@ -1,5 +1,8 @@
 #include "shell.h"
 
+int envars_builtins(char **commands);
+int other_set_buitlins(char **commands);
+
 /**
  * handle_builtins - Executes the builtin funtions in case the command is one
  * @commands: User's input parsed as an array of commads
@@ -11,6 +14,23 @@ int handle_builtins(char **commands)
 	if (commands[0] == NULL)
 		return (0);
 
+	if (envars_builtins(commands))
+		return (1);
+
+	if (other_set_buitlins(commands))
+		return (1);
+
+	return (0);
+}
+
+/**
+ * envars_builtins - Verifies if a command is a builtin
+ * @commands: Arrays of commnads
+ *
+ * Return: 1 if command is a builtin, 0 otherwise
+*/
+int envars_builtins(char **commands)
+{
 	if (strcmp(commands[0], "env") == 0)
 	{
 		if (commands[1] != NULL)
@@ -52,6 +72,17 @@ int handle_builtins(char **commands)
 		return (1);
 	}
 
+	return (0);
+}
+
+/**
+ * other_set_buitlins - Verifies if a command is a builtin
+ * @commands: Arrays of commnads
+ *
+ * Return: 1 if command is a builtin, 0 otherwise
+*/
+int other_set_buitlins(char **commands)
+{
 	if (strcmp(commands[0], "cd") == 0)
 	{
 		char *path = commands[1];

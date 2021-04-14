@@ -109,8 +109,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 	if (handle_PATH(commands) == -1)
 		flag = -1;
 	/* check if we can only run for positives */
-	/* Fork parent process to execute the command */
-	child_pid = fork();
+	child_pid = fork();/* Fork parent process to execute the command */
 	if (child_pid == -1)
 		dispatch_error(first_av);
 	else if (child_pid == 0)

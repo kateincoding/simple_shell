@@ -26,10 +26,9 @@ int main(int ac, char **av)
 			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		/* Read commands from console */
 		read = read_line(fd, &buff);
-		/* Remove comments & '\n' char from buffer */
 		handle_history(buff);
+		/* Remove comments & '\n' char from buffer */
 		buff = handle_comment(buff);
-		
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */
 		handling_semicolon_and_operators(buff, read, av[0]);
@@ -75,6 +74,7 @@ int handle_arguments(int ac, char **av, int *exec_file)
 
 /**
  * sigintHandler - Avoids current process to finish
+ * @sig_num: Signal number
 */
 void sigintHandler(int __attribute__((unused))sig_num)
 {

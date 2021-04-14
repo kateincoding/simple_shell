@@ -15,7 +15,7 @@ char *handle_comment(char *str_input)
 		*str_input = '\n';
 		*(str_input + 1) = '\0';
 	}
-	while(str_input && *str_input)
+	while (str_input && *str_input)
 	{
 		if (*str_input == '#' && *(str_input - 1) == ' ')
 		{
@@ -23,7 +23,7 @@ char *handle_comment(char *str_input)
 			*str_input = '\0';
 			break;
 		}
-        str_input++;
+		str_input++;
 	}
 	return (without_comments);
 }

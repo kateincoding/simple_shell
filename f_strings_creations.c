@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _strjoin - concatenates string 1 + string 2
+ * f_strjoin - concatenates string 1 + string 2
  * @s1: string 1
  * @s2: string 2
  * Return: copy of string with null terminated char
