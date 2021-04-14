@@ -50,8 +50,6 @@ int _history(void)
 	char *str_num;
 	int count = *get_history_lines_count() % 4096;
 
-	printf("Printing history\n");
-
 	for (curr = *get_history_addrss(); curr != NULL; curr = curr->next)
 	{
 		str_num = num_to_str(count++);
