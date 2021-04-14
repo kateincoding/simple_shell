@@ -1,5 +1,8 @@
 #include "shell.h"
 
+int handle_arguments(int ac, char **av, int *exec_file);
+void handle_signal(void);
+
 /**
  * main - Entry point
  * @ac: number of arguments
@@ -7,29 +10,14 @@
  *
  * Return: 0 on success
 */
-int main(int __attribute__((unused))ac, char **av)
+int main(int ac, char **av)
 {
 	int read, exec_file = 0;
 	char *buff = NULL;
-	int fd = STDIN_FILENO;
+	int fd;
 
-	if (ac > 2)
-	{
-		char *err_msg = "Error: more than one argument\n";
-
-		write(STDERR_FILENO, err_msg, strlen(err_msg));
-		return (errno);
-	}
-	if (ac == 2)
-	{
-		fd = open(av[1], O_RDONLY);
-		exec_file = 1;
-	}
-	if (fd == -1)
-	{
-		perror(av[0]);
-		return (errno);
-	}
+	signal(SIGINT, handle_signal);
+	fd = handle_arguments(ac, av, &exec_file);
 	update_count_lines();
 	while (1)
 	{
@@ -50,4 +38,43 @@ int main(int __attribute__((unused))ac, char **av)
 	if (exec_file)
 		close(fd);
 	return (0);
+}
+
+/**
+ * handle_arguments - Check the number of arguments passed to main
+ * @ac: Number of arguments
+ * @av: Array of arguments as strings
+ * @exec_file: Integer used to check if user wants to exec commands from file
+ *
+ * Return: File descriptor to file
+*/
+int handle_arguments(int ac, char **av, int *exec_file)
+{
+	int fd = STDIN_FILENO;
+	char *err_msg = "Error: more than one argument\n";
+
+	if (ac > 2)
+	{
+		write(STDERR_FILENO, err_msg, strlen(err_msg));
+		exit(1);
+	}
+	if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		*exec_file = 1;
+	}
+	if (fd == -1)
+	{
+		perror(av[0]);
+		exit(1);
+	}
+
+	return (fd);
+}
+
+/**
+ * handle_signal - Avoids current process to finish
+*/
+void handle_signal(void)
+{
 }
