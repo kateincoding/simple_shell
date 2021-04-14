@@ -1,7 +1,7 @@
 #include "shell.h"
 
 int handle_arguments(int ac, char **av, int *exec_file);
-void handle_signal(int num);
+void sigintHandler(int sig_num);
 
 /**
  * main - Entry point
@@ -16,7 +16,7 @@ int main(int ac, char **av)
 	char *buff = NULL;
 	int fd;
 
-	signal(SIGINT, handle_signal);
+	signal(SIGINT, sigintHandler);
 	fd = handle_arguments(ac, av, &exec_file);
 	update_count_lines();
 	while (1)
@@ -29,6 +29,7 @@ int main(int ac, char **av)
 		/* Remove comments & '\n' char from buffer */
 		handle_history(buff);
 		buff = handle_comment(buff);
+		
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */
 		handling_semicolon_and_operators(buff, read, av[0]);
@@ -73,9 +74,9 @@ int handle_arguments(int ac, char **av, int *exec_file)
 }
 
 /**
- * handle_signal - Avoids current process to finish
+ * sigintHandler - Avoids current process to finish
 */
-void handle_signal(int __attribute__((unused))num)
+void sigintHandler(int __attribute__((unused))sig_num)
 {
 	write(STDIN_FILENO, "\n#cisfun$ ", 10);
 }
