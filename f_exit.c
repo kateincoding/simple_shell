@@ -21,6 +21,7 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	{
 		write_history();
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMDS);
+		free_temp_cmds();
 		exit(0);
 	}
 
@@ -30,6 +31,7 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	{
 		write_history();
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMDS);
+		free_temp_cmds();
 		exit(status);
 	}
 
