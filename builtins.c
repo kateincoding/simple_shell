@@ -39,7 +39,8 @@ int _setenv(char *name, char *value)
 		while (__environ[env_count] != NULL)
 			env_count++;
 
-		__environ = _realloc(__environ, sizeof(__environ), sizeof(char *) * (env_count + 2));
+		__environ = _realloc(__environ, sizeof(__environ),
+			sizeof(char *) * (env_count + 2));
 		if (__environ == NULL)
 			dispatch_error("Error while _reallocating memory for new env var");
 
