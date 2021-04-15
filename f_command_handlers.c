@@ -84,6 +84,9 @@ int handle_PATH(char **commands)
 	)
 		return (-1);
 
+	if (access(path, F_OK) == 0)
+		return (0);
+
 	path_dirs = _getenv("PATH");
 	if (path_dirs == NULL)
 		return (-1);
