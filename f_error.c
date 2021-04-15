@@ -6,8 +6,13 @@
 */
 void dispatch_error(char *msg)
 {
-	perror(msg);
-	exit(errno);
+
+
+	/* perror(msg); */
+	print_builtin_error(msg);
+	print_builtin_error(": not found\n");
+	/*exit(errno);*/
+	exit(127);
 }
 
 /**
