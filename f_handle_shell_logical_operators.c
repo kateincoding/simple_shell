@@ -113,16 +113,22 @@ int execute_commands(char __attribute__((unused))*buff, char **cmds_list,
 	/* check if we can only run for positives */
 	child_pid = fork();/* Fork parent process to execute the command */
 	if (child_pid == -1)
+	{
+		free_allocs(buff_main, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		free_temp_cmds();
 		dispatch_error(first_av);
+	}
 	else if (child_pid == 0)
 	{
 		handle_PATH(commands);
 		execve(commands[0], commands, __environ);
+		/* printf("errno = %i\n", errno); */
 		free_allocs(buff_main, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		free_temp_cmds();
 		dispatch_error(first_av);
 	}
 	wait(status);
+	/* printf("errno = %i\n", errno); */
 	set_process_exit_code(*status / 256);
 	free_dbl_ptr(commands);
 	return (flag);
