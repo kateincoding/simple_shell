@@ -18,9 +18,9 @@
 * [Authors](#Authors)
 
 ## Introduction
-  
-### What is Shell 
-A **shell** is a command-line interpreter, it is the computer program that provides a user interface to access the services of the operating system. 
+
+### What is Shell
+A **shell** is a command-line interpreter, it is the computer program that provides a user interface to access the services of the operating system.
 
 ## Project Information
 
@@ -115,5 +115,5 @@ $
 3|[shell.h](./shell.h)|Header file
 
 **man or help:**
-help [cd] 
+help [cd]
 help [help]

@@ -44,7 +44,7 @@ void free_list(list_t *head);
 /*function with all the logical part that will work with the main */
 void handling_semicolon_and_operators(char *buff, int read);
 void handling_or(char *buff, char *buff_semicolon, char **cmds_list, int read);
-int handling_and(char *buff, char *buff_or, char **cmds_list, 
+int handling_and(char *buff, char *buff_or, char **cmds_list,
 								char **cmds_list_2, int read, int prev_flag);
 int execute_commands(char *buff, char **cmds_list, char *cmd, int read);
 
