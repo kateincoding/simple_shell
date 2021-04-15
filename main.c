@@ -19,7 +19,7 @@ int main(int ac, char **av)
 
 	signal(SIGINT, sigintHandler);
 	fd = handle_arguments(ac, av, &exec_file);
-	update_count_lines();
+	/*update_count_lines();*/
 	while (1)
 	{
 		/* Print console symbol only if it is interactive*/
@@ -33,7 +33,7 @@ int main(int ac, char **av)
 			free(buff);
 			exit(0);
 		}
-		handle_history(buff);
+		/*handle_history(buff);*/
 		/* Remove comments & '\n' char from buffer */
 		buff = handle_comment(buff);
 		_strtok(buff, "\n");

@@ -117,8 +117,8 @@ int other_set_buitlins(char **commands)
 			return (1);
 		}
 
-		_history();
-		return (1);
+		/*_history();*/
+		/*return (1);*/
 	}
 
 	return (0);
