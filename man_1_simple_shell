@@ -1,0 +1,74 @@
+.TH SIMPLE_SHELL 1 "April 2021" "Holberton School" "Linux Programmers Manual"
+
+.SH NAME
+       Based in bash - GNU Bourne-Again SHell
+       simple_shell - command language interpreter that reads from standard input
+
+.SH SYNOPSIS
+       bash [options] [command_string | file]
+
+       .B gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+       .B ./hsh
+
+.SH DESCRIPTION
+       Bash  is an sh-compatible command language interpreter that executes commands read from the standard input or from a file.  Bash also incorporates use‐
+       ful features from the Korn and C shells (ksh and csh).
+
+       Bash is intended to be a conformant implementation of the Shell and Utilities portion of the IEEE POSIX specification (IEEE Standard 1003.1).  Bash can
+       be configured to be POSIX-conformant by default.
+
+.TP
+\fB Return (Exit Value) \fR
+
+Upon termination of the simple shell program, an exit value will be set according to the status of the last command
+executed. If the command ran succesfuly, the exit value will be zero (0).
+
+.TP
+\fBFORMAT OF COMMAND INPUT\fR
+
+The simple shell can work in two different modes, \fIinteractive\fR and \fInon-interactive\fR. In both modes, commands
+can be written with their absolute path or simply their executable name if they exist in one of the folders defined by
+PATH.
+
+Example:
+
+\fB/bin/ls\fR is the same as \fBls\fR (ls exists in one of the PATH folders)
+
+
+.IP \fB-Interactive Mode:\fR
+
+In this condition, the shell will display a prompt ($) that will indicate that the user can provide commands by writing them
+with a keyboard. In order to execute the commands the user will need to press the enter key (new line).
+
+Each time a command is executed, the prompt will reappear and wait for a new user input.
+
+Example:
+
+\fBvagrant@vagrant-ubuntu-trusty-64:~/simple_shell$\fR ./hsh
+
+$ ls
+
+file1 file2 dira dirb
+
+$
+
+In order to exit the simple shell, the user must press the combination CTRL + D, as the CTRL + C signal is reserved only for internal script termination and it does not exit the shell.
+
+.IP \fB-Non-interactive Mode:\fR
+
+In this condition, the shell will run commands provided through a pipe at the moment of execution, and will not display a prompt
+($) or wait for new user input:
+
+Example:
+
+\fBvagrant@vagrant-ubuntu-trusty-64:~/simple_shell$\fR echo "ls" | ./hsh
+
+file1 file2 file3 file4
+
+\fBvagrant@vagrant-ubuntu-trusty-64:~/simple_shell$\fR
+
+--
+
+.SH AUTHORS
+Katherine Soto <kateincoding@gmail.com>
+Renato Leon <2829@holbertonschool.com>
