@@ -53,6 +53,8 @@ int handling_and(char *buff_semicolon, int read,
 void __attribute__((constructor)) build_dynamic_environ(void);
 void __attribute__((destructor)) free_dynamic_environ(void);
 
+char *_getenv(char *name);
+
 /* replacement variables */
 void handle_var_replacement(char **commands);
 int *process_exit_code();
@@ -129,6 +131,7 @@ char *_strchr(const char *s, int c);
 char *_strcat(char *s1, const char *s2);
 char *_strncat(char *s1, const char *s2, size_t n);
 char *num_to_str(int num);
+int	_strncmp(const char *s1, const char *s2, size_t n);
 
 /* f_strings_creations */
 char *f_strjoin(char const *s1, char const *s2);

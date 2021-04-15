@@ -84,7 +84,7 @@ int handle_PATH(char **commands)
 	)
 		return (-1);
 
-	path_dirs = getenv("PATH");
+	path_dirs = _getenv("PATH");
 	if (path_dirs == NULL)
 	{
 		dispatch_error("Error");
@@ -123,8 +123,8 @@ int handle_PATH(char **commands)
 */
 char *getpath(char *dir, char *filename)
 {
-	int dir_len = strlen(dir);
-	int filename_len = strlen(filename);
+	int dir_len = _strlen(dir);
+	int filename_len = _strlen(filename);
 	char *path;
 
 	path = allocate_memory(sizeof(char *) * (dir_len + filename_len + 2));

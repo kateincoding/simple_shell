@@ -100,7 +100,7 @@ int handle_alias_args(char **commands, list_t **out_addrs)
 	for (i = 1; commands[i] != NULL; i++)
 	{
 		was_alias = 0;
-		len = strlen(commands[i]);
+		len = _strlen(commands[i]);
 		/* Check that if user is trying to print an alias */
 		for (curr = *alias_addrs; curr != NULL; curr = curr->next)
 		{
@@ -135,7 +135,7 @@ void handle_aliases(char **commands)
 {
 	list_t *curr;
 	list_t **alias_addrs = get_alias_head();
-	int cmd_len = strlen(commands[0]);
+	int cmd_len = _strlen(commands[0]);
 	char *str;
 	char tmp_buff[250];
 	int i, alias_len = 0;
@@ -153,7 +153,7 @@ void handle_aliases(char **commands)
 		str = curr->str;
 		if (strncmp(commands[0], str, cmd_len) == 0 && str[cmd_len] == '=')
 		{ /* the command is an alias */
-			alias_len = strlen(&str[cmd_len + 2]); /* +2 beacause of "='" chars */
+			alias_len = _strlen(&str[cmd_len + 2]); /* +2 beacause of "='" chars */
 			strncpy(tmp_buff, &str[cmd_len + 2], alias_len - 1);
 			tmp_buff[alias_len] = '\0';
 			/* Free and then update the command */

@@ -10,7 +10,7 @@ void env(void)
 
 	for (i = 0; env[i]; i++)
 	{
-		write(STDOUT_FILENO, env[i], strlen(env[i]));
+		write(STDOUT_FILENO, env[i], _strlen(env[i]));
 		write(STDOUT_FILENO, "\n", 1);
 	}
 
@@ -54,7 +54,7 @@ int _setenv(char *name, char *value)
 		free(__environ[env_index]);
 	}
 
-	new_var_len = strlen(name) + strlen(value) + 2;
+	new_var_len = _strlen(name) + _strlen(value) + 2;
 	/* store the env var either if it exists or it needs to be overwritten */
 	__environ[env_index] = allocate_memory(sizeof(char) * new_var_len);
 	strcpy(__environ[env_index], name);
@@ -105,7 +105,7 @@ int _cd(char *path)
 	char *oldpwd;
 
 	if (_strcmp(path, "-") == 0)
-		path = getenv("OLDPWD");
+		path = _getenv("OLDPWD");
 
 	if (path == NULL)
 	{

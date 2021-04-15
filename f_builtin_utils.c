@@ -49,7 +49,7 @@ int is_valid_env_var_name(char *name)
 int get_env_index(char *name)
 {
 	int i;
-	int len = strlen(name);
+	int len = _strlen(name);
 
 	for (i = 0; __environ[i] != NULL; i++)
 		if (strncmp(__environ[i], name, len) == 0)

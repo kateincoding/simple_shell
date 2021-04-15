@@ -62,7 +62,7 @@ int handle_arguments(int ac, char **av, int *exec_file)
 
 	if (ac > 2)
 	{
-		write(STDERR_FILENO, err_msg, strlen(err_msg));
+		write(STDERR_FILENO, err_msg, _strlen(err_msg));
 		exit(1);
 	}
 	if (ac == 2)

@@ -17,7 +17,7 @@ void update_count_lines(void)
 	if (getcwd(curr_dir, 512) == NULL)
 		return;
 
-	home = getenv("HOME");
+	home = _getenv("HOME");
 	if (home == NULL)
 		home = "";
 

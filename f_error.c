@@ -16,7 +16,7 @@ void dispatch_error(char *msg)
 */
 void print_builtin_error(char *msg)
 {
-	int len = strlen(msg);
+	int len = _strlen(msg);
 
 	write(STDERR_FILENO, msg, len);
 	set_process_exit_code(1);

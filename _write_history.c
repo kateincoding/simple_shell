@@ -9,7 +9,7 @@ void write_history(void)
 	int fd;
 	char *home;
 
-	home = getenv("HOME");
+	home = _getenv("HOME");
 	if (home == NULL)
 		home = "/";
 
