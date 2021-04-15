@@ -39,7 +39,6 @@ int main(int ac, char **av)
 		buff = handle_comment(buff);
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */
-		/* handling_semicolon_and_operators(buff, read, av[0]); */
 		handling_semicolon_and_operators(buff, read, av[0]);
 	}
 	/* Free buffer memory */

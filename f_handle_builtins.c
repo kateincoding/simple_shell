@@ -42,13 +42,15 @@ int envars_builtins(char **commands)
 
 	if (_strcmp(commands[0], "setenv") == 0)
 	{
-		char *err_msg;
+		/*char *err_msg;*/
 
 		if (commands[1] == NULL || commands[2] == NULL || commands[3] != NULL)
 		{
+			/*
 			err_msg = "Error: setenv command needs exactly two arguments\n";
 			write(STDOUT_FILENO, err_msg, _strlen(err_msg));
 			set_process_exit_code(1);
+			*/
 			return (1);
 		}
 
