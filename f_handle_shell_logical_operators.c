@@ -106,7 +106,7 @@ int execute_commands(char *buff, char **cmds_list,
 	child_pid = fork();/* Fork parent process to execute the command */
 	if (child_pid == -1)
 	{
-		free_allocs(buff_main, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		free_temp_cmds();
 		dispatch_error(first_av);
 	}
