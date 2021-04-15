@@ -32,7 +32,6 @@ int main(int ac, char **av)
 		if (read == EOF)
 		{
 			free(buff);
-			write(STDOUT_FILENO, "\n", 1);
 			exit(0);
 		}
 		/*handle_history(buff);*/
