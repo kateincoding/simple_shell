@@ -32,7 +32,7 @@ int main(int ac, char **av)
 		if (read == EOF)
 		{
 			free(buff);
-			exit(0);
+			exit(*process_exit_code());
 		}
 		/*handle_history(buff);*/
 		/* Remove comments & '\n' char from buffer */
@@ -46,7 +46,7 @@ int main(int ac, char **av)
 	free(buff);
 	if (exec_file)
 		close(fd);
-	return (0);
+	return (*process_exit_code());
 }
 
 /**
