@@ -11,13 +11,14 @@ void handle_aliases(char **commands);
 */
 void handling_semicolon_and_operators(char *buff, int read, char *first_av)
 {
-	int i;
-	char **cmds_list = parse_user_input(buff, ";");
+	/* int i; */
+	/*char **cmds_list = parse_user_input(buff, ";");*/
+	char **cmds_list = NULL;
 
-	for (i = 0; cmds_list[i] != NULL; i++)
-		execute_commands(buff, cmds_list, cmds_list[i], read, first_av);
+	execute_commands(buff, cmds_list, buff, read, first_av);
+	/* for (i = 0; cmds_list[i] != NULL; i++) */
 		/*handling_or(cmds_list[i], read, first_av);*/
-	free_dbl_ptr(cmds_list);
+	/* free_dbl_ptr(cmds_list); */
 }
 
 /**
@@ -110,7 +111,6 @@ int execute_commands(char *buff, char **cmds_list,
 		handle_PATH(commands);
 		execve(commands[0], commands, __environ);
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		free_temp_cmds();
 		dispatch_error(first_av);
 	}
 	wait(status);
