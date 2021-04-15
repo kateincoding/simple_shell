@@ -10,7 +10,8 @@ void sigintHandler(int sig_num);
  *
  * Return: 0 on success
 */
-int main(int ac, char **av)
+int main(__attribute__((unused)) int ac,
+__attribute__((unused)) char **av)
 {
 	int read, exec_file = 0;
 	char *buff = NULL;
@@ -18,13 +19,14 @@ int main(int ac, char **av)
 	int fd;
 
 	signal(SIGINT, sigintHandler);
-	fd = handle_arguments(ac, av, &exec_file);
-	/*update_count_lines();*/
+	/* fd = handle_arguments(ac, av, &exec_file); */
+	update_count_lines();
+
 	while (1)
 	{
 		/* Print console symbol only if it is interactive*/
 		if (isatty(STDIN_FILENO) == 1 && exec_file == 0)
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		/* Read commands from console */
 		/*read = read_line(fd, &buff);*/
 		read = getline(&buff, &buff_len, stdin);
@@ -33,12 +35,13 @@ int main(int ac, char **av)
 			free(buff);
 			exit(0);
 		}
-		/*handle_history(buff);*/
+		handle_history(buff);
 		/* Remove comments & '\n' char from buffer */
 		buff = handle_comment(buff);
 		_strtok(buff, "\n");
 		/* Handling_semicolon, ||, && and executes inside of the function */
-		handling_semicolon_and_operators(buff, read, av[0]);
+		/* handling_semicolon_and_operators(buff, read, av[0]); */
+		handling_semicolon_and_operators(buff, read);
 	}
 	/* Free buffer memory */
 	free(buff);
