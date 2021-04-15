@@ -10,7 +10,7 @@ void sigintHandler(int sig_num);
  *
  * Return: 0 on success
 */
-int main_last(int ac, char **av)
+int main(int ac, char **av)
 {
 	int read, exec_file = 0;
 	char *buff = NULL;
@@ -35,7 +35,7 @@ int main_last(int ac, char **av)
 			write(STDOUT_FILENO, "\n", 1);
 			exit(0);
 		}
-		handle_history(buff);
+		/*handle_history(buff);*/
 		/* Remove comments & '\n' char from buffer */
 		buff = handle_comment(buff);
 		_strtok(buff, "\n");

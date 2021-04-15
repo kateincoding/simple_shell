@@ -106,15 +106,19 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		return (-1);
 	}
 	/* have a flag when the execution is an error (||)*/
+	/*
 	if (handle_PATH(commands) == -1)
 		flag = -1;
+		*/
 	/* check if we can only run for positives */
 	child_pid = fork();/* Fork parent process to execute the command */
 	if (child_pid == -1)
 		dispatch_error(first_av);
 	else if (child_pid == 0)
 	{ /* Search command using the PATH env variable */
+	/*
 		handle_PATH(commands);
+		*/
 		/* execute command */
 		execve(commands[0], commands, __environ);
 		/* free memory */
