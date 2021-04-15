@@ -1,9 +1,5 @@
 #include "shell.h"
 
-static char *buff_main;
-static char **cmds_l;
-static char **cmds_l2;
-
 void handle_aliases(char **commands);
 
 /**
@@ -18,12 +14,9 @@ void handling_semicolon_and_operators(char *buff, int read, char *first_av)
 	int i;
 	char **cmds_list = parse_user_input(buff, ";");
 
-	buff_main = buff;
-	cmds_l = cmds_list;
-	cmds_l2 = NULL;
-
 	for (i = 0; cmds_list[i] != NULL; i++)
-		handling_or(cmds_list[i], read, first_av);
+		execute_commands(buff, cmds_list, cmds_list[i], read, first_av);
+		/*handling_or(cmds_list[i], read, first_av);*/
 	free_dbl_ptr(cmds_list);
 }
 
@@ -38,8 +31,6 @@ void handling_or(char *buff_semicolon, int read, char *first_av)
 {
 	int i, flag, prev_flag = -1;
 	char **cmds_list_2 = parse_user_input(buff_semicolon, "||");
-
-	cmds_l2 = cmds_list_2;
 
 	for (i = 0; cmds_list_2[i] != NULL; i++)
 	{
@@ -92,7 +83,7 @@ int handling_and(char *buff_or, int read, char *first_av, int prev_flag)
  * @first_av: av[0]
  * Return: 0 on success
 */
-int execute_commands(char __attribute__((unused))*buff, char **cmds_list,
+int execute_commands(char *buff, char **cmds_list,
 	char *cmd, int __attribute__((unused))read, char *first_av)
 {
 	char **commands;
@@ -103,7 +94,7 @@ int execute_commands(char __attribute__((unused))*buff, char **cmds_list,
 	handle_var_replacement(commands);
 	handle_aliases(commands);
 	/* Exit error, ENTER, and builtins */
-	if (handle_exit(cmd, cmds_list, commands) == -1 ||
+	if (handle_exit(buff, cmds_list, commands) == -1 ||
 			handle_enter(commands) == 1	||
 			handle_builtins(commands) == 1)
 	{
@@ -118,12 +109,14 @@ int execute_commands(char __attribute__((unused))*buff, char **cmds_list,
 	{
 		handle_PATH(commands);
 		execve(commands[0], commands, __environ);
-		free_allocs(buff_main, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		free_temp_cmds();
 		dispatch_error(first_av);
 	}
 	wait(status);
-	set_process_exit_code(*status / 256);
+	*status = WEXITSTATUS(*status);
+	if (*status == 2)
+		set_process_exit_code(127);
 	free_dbl_ptr(commands);
 	return (flag);
 }
@@ -133,6 +126,8 @@ int execute_commands(char __attribute__((unused))*buff, char **cmds_list,
 */
 void free_temp_cmds(void)
 {
+	/*
 	free_dbl_ptr(cmds_l);
 	free_dbl_ptr(cmds_l2);
+	*/
 }
