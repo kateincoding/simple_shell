@@ -129,9 +129,9 @@ char *getpath(char *dir, char *filename)
 
 	path = allocate_memory(sizeof(char *) * (dir_len + filename_len + 2));
 
-	strcpy(path, dir);
-	strcat(path, "/");
-	strncat(path, filename, filename_len + 1);
+	_strcpy(path, dir);
+	_strcat(path, "/");
+	_strncat(path, filename, filename_len + 1);
 
 	return (path);
 }

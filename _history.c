@@ -67,7 +67,7 @@ int _history(void)
 void handle_history(char *buff)
 {
 	/* Only adds a command if is different from the previous one */
-	if (last_cmd == NULL || buff[0] != ' ' || strcmp(last_cmd->str, buff) != 0)
+	if (last_cmd == NULL || buff[0] != ' ' || _strcmp(last_cmd->str, buff) != 0)
 		last_cmd = add_node_end(get_history_addrss(), buff);
 }
 

@@ -92,6 +92,8 @@ int f_read_line(char **str, char **line, int fd);
 /* own implementations */
 char *_strtok(char *str, char *delimiter);
 int _getline(char **buffer, size_t *buf_size, FILE *stream);
+char *_strcpy(char *dest, char *src);
+char *_strncpy(char *dest, char *src, int n);
 
 /* Command handlers */
 int handle_PATH(char **commands);

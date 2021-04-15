@@ -58,9 +58,9 @@ int _setenv(char *name, char *value)
 	new_var_len = _strlen(name) + _strlen(value) + 2;
 	/* store the env var either if it exists or it needs to be overwritten */
 	__environ[env_index] = allocate_memory(sizeof(char) * new_var_len);
-	strcpy(__environ[env_index], name);
-	strcat(__environ[env_index], "=");
-	strcat(__environ[env_index], value);
+	_strcpy(__environ[env_index], name);
+	_strcat(__environ[env_index], "=");
+	_strcat(__environ[env_index], value);
 
 	set_process_exit_code(0);
 	return (1);

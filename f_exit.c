@@ -13,7 +13,7 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	int status;
 
 	/* Command is NOT exit */
-	if (commands[0] == NULL || strcmp(commands[0], "exit") != 0)
+	if (commands[0] == NULL || _strcmp(commands[0], "exit") != 0)
 		return (0);
 
 	/* Command is exit */
@@ -76,9 +76,9 @@ void print_Illegal_exit_status(char *status_str)
 	for (i = 0; i < 50; i++)
 		err_msg[i] = '\0';
 
-	strcpy(err_msg, "exit: Illegal number: ");
-	strcat(err_msg, status_str);
-	strcat(err_msg, "\n");
+	_strcpy(err_msg, "exit: Illegal number: ");
+	_strcat(err_msg, status_str);
+	_strcat(err_msg, "\n");
 	/* Print error message */
 	print_builtin_error(err_msg);
 }

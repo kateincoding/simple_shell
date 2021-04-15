@@ -57,7 +57,7 @@ void set_alias(char *alias_pair)
 	strncpy(tmp_buff, alias_pair, first_eq);
 	tmp_buff[first_eq] = '\0';
 	/* Append = and ' symbols */
-	strcat(tmp_buff, "='");
+	_strcat(tmp_buff, "='");
 
 	/* Find last eq in case of putting '=' secuentially */
 	for (last_eq = first_eq; alias_pair[last_eq] != '\0'; last_eq++)
@@ -65,8 +65,8 @@ void set_alias(char *alias_pair)
 			break;
 
 	/* Copy the second part of the alias */
-	strcat(tmp_buff, &alias_pair[last_eq]);
-	strcat(tmp_buff, "'");
+	_strcat(tmp_buff, &alias_pair[last_eq]);
+	_strcat(tmp_buff, "'");
 
 	/* Add alias to the global list */
 	for (curr = *alias_addrs; curr != NULL; curr = curr->next)
