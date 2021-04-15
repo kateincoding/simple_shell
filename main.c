@@ -10,7 +10,7 @@ void sigintHandler(int sig_num);
  *
  * Return: 0 on success
 */
-int main(int ac, char **av)
+int main_last(int ac, char **av)
 {
 	int read, exec_file = 0;
 	char *buff = NULL;
