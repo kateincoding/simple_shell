@@ -84,7 +84,7 @@ int handle_PATH(char **commands)
 	)
 		return (-1);
 
-	if (access(path, F_OK) == 0)
+	if (access(commands[0], F_OK) == 0)
 		return (0);
 
 	path_dirs = _getenv("PATH");
@@ -105,7 +105,7 @@ int handle_PATH(char **commands)
 		{
 			free(commands[0]);
 			commands[0] = path;
-			flag = 1;
+			flag = 0;
 			break;
 		}
 		free(path);
