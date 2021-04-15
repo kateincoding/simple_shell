@@ -17,7 +17,7 @@ char *duplicate_string_1(char *str);
 /* Error handlers */
 void dispatch_error_1(char *msg, int status);
 
-int main(int ac, char **av, char **env)
+int main_other()
 {
 	int read;
 	char *buff = NULL;
@@ -50,7 +50,7 @@ int main(int ac, char **av, char **env)
 		{
 			/* execute command */
 			commands = parse_user_input_1(buff);
-			execve(commands[0], commands, env);
+			execve(commands[0], commands, NULL);
 			/* handle errors */
 			perror("Error");
 			exit(1);
