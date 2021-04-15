@@ -114,16 +114,6 @@ int execute_commands(char *buff, char **cmds_list,
 	{
 		handle_PATH(commands);
 		execve(commands[0], commands, __environ);
-<<<<<<< HEAD
-		/* printf("errno = %i\n", errno); */
-		free_allocs(buff_main, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		free_temp_cmds();
-		dispatch_error(first_av);
-	}
-	wait(status);
-	/* printf("errno = %i\n", errno); */
-	set_process_exit_code(*status / 256);
-=======
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		dispatch_error(first_av);
 	}
@@ -131,7 +121,6 @@ int execute_commands(char *buff, char **cmds_list,
 	*status = WEXITSTATUS(*status);
 	if (*status == 2)
 		set_process_exit_code(127);
->>>>>>> cff2e4b527b21e2f5db11495a0f5be8df1dbdb5e
 	free_dbl_ptr(commands);
 	return (flag);
 }
