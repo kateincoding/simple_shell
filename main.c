@@ -25,13 +25,14 @@ int main(int ac, char **av)
 	{
 		/* Print console symbol only if it is interactive*/
 		if (isatty(STDIN_FILENO) == 1 && exec_file == 0)
-			write(STDOUT_FILENO, "#cisfun$ ", 9);
+			write(STDOUT_FILENO, "$ ", 2);
 		/* Read commands from console */
 		/*read = read_line(fd, &buff);*/
 		read = getline(&buff, &buff_len, stdin);
 		if (read == EOF)
 		{
 			free(buff);
+			write(STDOUT_FILENO, "\n", 1);
 			exit(0);
 		}
 		handle_history(buff);
