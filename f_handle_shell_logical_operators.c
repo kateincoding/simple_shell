@@ -116,7 +116,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 	{ /* Search command using the PATH env variable */
 		handle_PATH(commands);
 		/* execute command */
-		execve(commands[0], commands, NULL);
+		execve(commands[0], commands, __environ);
 		/* free memory */
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		/* handle errors */
