@@ -19,7 +19,7 @@ int main(int ac, char **av)
 
 	signal(SIGINT, sigintHandler);
 	fd = handle_arguments(ac, av, &exec_file);
-	update_count_lines();
+	/*update_count_lines();*/
 
 	while (1)
 	{
