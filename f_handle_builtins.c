@@ -31,7 +31,7 @@ int handle_builtins(char **commands)
 */
 int envars_builtins(char **commands)
 {
-	if (strcmp(commands[0], "env") == 0)
+	if (_strcmp(commands[0], "env") == 0)
 	{
 		if (commands[1] != NULL)
 			return (0);
@@ -40,7 +40,7 @@ int envars_builtins(char **commands)
 		return (1);
 	}
 
-	if (strcmp(commands[0], "setenv") == 0)
+	if (_strcmp(commands[0], "setenv") == 0)
 	{
 		char *err_msg;
 
@@ -56,7 +56,7 @@ int envars_builtins(char **commands)
 		return (1);
 	}
 
-	if (strcmp(commands[0], "unsetenv") == 0)
+	if (_strcmp(commands[0], "unsetenv") == 0)
 	{
 		char *err_msg;
 
@@ -83,7 +83,7 @@ int envars_builtins(char **commands)
 */
 int other_set_buitlins(char **commands)
 {
-	if (strcmp(commands[0], "cd") == 0)
+	if (_strcmp(commands[0], "cd") == 0)
 	{
 		char *path = commands[1];
 
@@ -97,19 +97,19 @@ int other_set_buitlins(char **commands)
 		return (1);
 	}
 
-	if (strcmp(commands[0], "alias") == 0)
+	if (_strcmp(commands[0], "alias") == 0)
 	{
 		_alias(commands);
 		return (1);
 	}
 
-	if (strcmp(commands[0], "help") == 0)
+	if (_strcmp(commands[0], "help") == 0)
 	{
 		_help(commands);
 		return (1);
 	}
 
-	if (strcmp(commands[0], "history") == 0)
+	if (_strcmp(commands[0], "history") == 0)
 	{
 		if (commands[1] != NULL)
 		{

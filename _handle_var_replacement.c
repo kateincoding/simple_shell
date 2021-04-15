@@ -19,14 +19,14 @@ void handle_var_replacement(char **commands)
 			continue;
 		/* Here the arg starts with '$' */
 
-		if (strcmp(&commands[i][1], "?") == 0)
+		if (_strcmp(&commands[i][1], "?") == 0)
 		{
 			free(commands[i]);
 			commands[i] = num_to_str(*process_exit_code());
 			return;
 		}
 
-		if (strcmp(&commands[i][1], "$") == 0)
+		if (_strcmp(&commands[i][1], "$") == 0)
 		{
 			free(commands[i]);
 			commands[i] = num_to_str(getpid());

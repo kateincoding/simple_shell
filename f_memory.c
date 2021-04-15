@@ -24,7 +24,7 @@ void *allocate_memory(unsigned int bytes)
 */
 char *duplicate_string(char *str)
 {
-	char *str_copy = strdup(str);
+	char *str_copy = _strdup(str);
 
 	if (str_copy == NULL)
 		dispatch_error("Error while making copy of string");

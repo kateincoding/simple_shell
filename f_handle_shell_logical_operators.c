@@ -13,9 +13,9 @@ void handling_semicolon_and_operators(char *buff, int read, char *first_av)
 {
 	int i;
 	char **cmds_list = parse_user_input(buff, ";");
-
 	for (i = 0; cmds_list[i] != NULL; i++)
-		handling_or(cmds_list[i], read, first_av);
+		execute_commands(buff, cmds_list, cmds_list[i], read, first_av);
+	/* handling_or(cmds_list[i], read, first_av); */
 	free_dbl_ptr(cmds_list);
 }
 

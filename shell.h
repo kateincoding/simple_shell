@@ -103,6 +103,8 @@ char *duplicate_string(char *str);
 void free_dbl_ptr(char **dbl_ptr);
 void free_allocs(char *buff, char **cmds_list, char **commands, int flags);
 
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
 /* handle_builtins */
 int handle_builtins(char **commands);
 
@@ -132,5 +134,6 @@ char *num_to_str(int num);
 char *f_strjoin(char const *s1, char const *s2);
 char *f_strsub(char const *s, unsigned int start, size_t len);
 void f_strdel(char **as);
+int _strcmp(const char *s1, const char *s2);
 
 #endif /* __SHELL_H */

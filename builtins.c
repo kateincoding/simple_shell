@@ -39,9 +39,9 @@ int _setenv(char *name, char *value)
 		while (__environ[env_count] != NULL)
 			env_count++;
 
-		__environ = realloc(__environ, sizeof(char *) * (env_count + 2));
+		__environ = _realloc(__environ, sizeof(__environ), sizeof(char *) * (env_count + 2));
 		if (__environ == NULL)
-			dispatch_error("Error while reallocating memory for new env var");
+			dispatch_error("Error while _reallocating memory for new env var");
 
 		/* The new value will be stored at index env_count */
 		env_index = env_count;
@@ -104,7 +104,7 @@ int _cd(char *path)
 	char buff[1024];
 	char *oldpwd;
 
-	if (strcmp(path, "-") == 0)
+	if (_strcmp(path, "-") == 0)
 		path = getenv("OLDPWD");
 
 	if (path == NULL)
