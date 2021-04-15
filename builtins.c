@@ -35,12 +35,14 @@ int _setenv(char *name, char *value)
 	if (env_index == -1)
 	{/* var doen't exist, SO CREATE IT */
 		int env_count = 0;
+		int old_size, new_size;
 
 		while (__environ[env_count] != NULL)
 			env_count++;
-
-		__environ = _realloc(__environ, sizeof(__environ),
-			sizeof(char *) * (env_count + 2));
+		
+		old_size = sizeof(char *) * (env_count);
+		new_size = sizeof(char *) * (env_count + 2);
+		__environ = _realloc(__environ, old_size, new_size);
 		if (__environ == NULL)
 			dispatch_error("Error while _reallocating memory for new env var");
 
