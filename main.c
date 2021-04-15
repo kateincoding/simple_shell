@@ -23,7 +23,7 @@ int main(int ac, char **av)
 	{
 		/* Print console symbol only if it is interactive*/
 		if (isatty(STDIN_FILENO) == 1 && exec_file == 0)
-			write(STDOUT_FILENO, "#cisfun$ ", 9);
+			write(STDOUT_FILENO, "$ ", 2);
 		/* Read commands from console */
 		read = read_line(fd, &buff);
 		handle_history(buff);
@@ -78,5 +78,5 @@ int handle_arguments(int ac, char **av, int *exec_file)
 */
 void sigintHandler(int __attribute__((unused))sig_num)
 {
-	write(STDIN_FILENO, "\n#cisfun$ ", 10);
+	write(STDIN_FILENO, "\n$ ", 3);
 }
