@@ -116,9 +116,7 @@ int execute_commands(char *buff, char **cmds_list, char *cmd,
 		dispatch_error(first_av);
 	else if (child_pid == 0)
 	{ /* Search command using the PATH env variable */
-	/*
 		handle_PATH(commands);
-		*/
 		/* execute command */
 		execve(commands[0], commands, __environ);
 		/* free memory */
