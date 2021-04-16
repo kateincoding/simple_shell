@@ -2,8 +2,6 @@
 
 void handle_aliases(char **commands);
 void handle_cmd_not_found(char **commands, char *first_av);
-/* void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
-	char *first_av); */
 
 /**
  * handling_semicolon_and_operators - Handle semicolon and logical op
@@ -115,7 +113,7 @@ int execute_commands(char *buff, char **cmds_list,
 	}
 	else
 	{
-		child_pid = fork();// Fork parent process to execute the command
+		child_pid = fork();/*Fork parent process to execute the command */
 		if (child_pid == -1)
 		{
 			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
