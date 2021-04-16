@@ -1,6 +1,8 @@
 #include "shell.h"
 
 void handle_aliases(char **commands);
+void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
+	char *first_av);
 
 /**
  * handling_semicolon_and_operators - Handle semicolon and logical op
@@ -115,17 +117,7 @@ int execute_commands(char *buff, char **cmds_list,
 		if (_err == 0)
 			execve(commands[0], commands, __environ);
 		else
-		{
-			set_process_exit_code(127);
-			/* printf("result handle path = %i\n", _err); */
-			write(2, first_av, _strlen(first_av));
-			write(2, ": ",2);
-			write(2, commands[0], _strlen(commands[0]));
-			write(2, ": command not found\n",20);
-			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-			exit(errno);
-			/*dispatch_error(first_av);*/
-		}
+			handle_cmd_not_found(buff, cmds_list, commands, first_av);
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		dispatch_error(first_av);
 	}
@@ -135,4 +127,23 @@ int execute_commands(char *buff, char **cmds_list,
 		set_process_exit_code(127);
 	free_dbl_ptr(commands);
 	return (flag);
+}
+
+/**
+ * handle_cmd_not_found - Print a message to stderr
+ * @buff: User's input
+ * @cmds_list: Array of commands
+ * @commands: Array of strings
+ * @first_av: First argument passed to the executable
+*/
+void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
+	char *first_av)
+{
+	set_process_exit_code(127);
+	write(2, first_av, _strlen(first_av));
+	write(2, ": ", 2);
+	write(2, commands[0], _strlen(commands[0]));
+	write(2, ": command not found\n", 20);
+	free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+	exit(errno);
 }

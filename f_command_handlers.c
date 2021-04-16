@@ -85,16 +85,12 @@ int handle_PATH(char **commands)
 		return (127);
 
 	if (access(commands[0], F_OK) == 0)
-	{
-		printf("estoy aqui");
 		return (0);
-	}
+
 	path_dirs = _getenv("PATH");
 	if (path_dirs == NULL)
-	{
-		/*printf("estoy aqui");*/
 		return (127);
-	}
+
 	str_copy = duplicate_string(path_dirs);
 	tkn_ptr = str_copy;
 	while (1)
@@ -103,13 +99,11 @@ int handle_PATH(char **commands)
 		if (tkn == NULL)
 			break;
 		tkn_ptr = NULL;
-
 		path = getpath(tkn, commands[0]);
 		if (access(path, F_OK) != -1)
 		{
 			free(commands[0]);
 			commands[0] = path;
-			
 			flag = 0;
 			break;
 		}
