@@ -158,7 +158,10 @@ int _alias(char **commands)
 	if (commands[1] == NULL)
 	{ /* This means to list all the aliases */
 		for (curr = *alias_addrs; curr != NULL; curr = curr->next)
-			printf("%s\n", curr->str);
+		{
+			_puts(curr->str);
+			_puts("\n");
+		}
 		set_process_exit_code(0);
 		return (1);
 	}
@@ -166,7 +169,10 @@ int _alias(char **commands)
 	status = handle_alias_args(commands, &out_head);
 	/* print listed alias */
 	for (curr = out_head; curr != NULL; curr = curr->next)
-		printf("%s\n", curr->str);
+	{
+		_puts(curr->str);
+		_puts("\n");
+	}
 	/* free list */
 	free_list(out_head);
 	return (status);

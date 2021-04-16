@@ -70,7 +70,7 @@ void set_alias(char *alias_pair)
 
 	/* Add alias to the global list */
 	for (curr = *alias_addrs; curr != NULL; curr = curr->next)
-		if (strncmp(curr->str, alias_pair, first_eq) == 0 &&
+		if (_strncmp(curr->str, alias_pair, first_eq) == 0 &&
 				(curr->str)[first_eq] == '=')
 		{ /* Update already existing alias */
 			free(curr->str);
@@ -104,7 +104,7 @@ int handle_alias_args(char **commands, list_t **out_addrs)
 		/* Check that if user is trying to print an alias */
 		for (curr = *alias_addrs; curr != NULL; curr = curr->next)
 		{
-			if (strncmp(curr->str, commands[i], len) == 0 && (curr->str)[len] == '=')
+			if (_strncmp(curr->str, commands[i], len) == 0 && (curr->str)[len] == '=')
 			{ /* Means to list an alias */
 				was_alias = 1;
 				add_node_end(out_addrs, curr->str);
@@ -120,7 +120,9 @@ int handle_alias_args(char **commands, list_t **out_addrs)
 		{
 			status = -1;
 			set_process_exit_code(1);
-			printf("alias: %s not found\n", commands[i]);
+			_puts("alias: ");
+			_puts(commands[i]);
+			_puts(" not found\n");
 		}
 	}
 
@@ -151,7 +153,7 @@ void handle_aliases(char **commands)
 	for (curr = *alias_addrs; curr != NULL; curr = curr->next)
 	{
 		str = curr->str;
-		if (strncmp(commands[0], str, cmd_len) == 0 && str[cmd_len] == '=')
+		if (_strncmp(commands[0], str, cmd_len) == 0 && str[cmd_len] == '=')
 		{ /* the command is an alias */
 			alias_len = _strlen(&str[cmd_len + 2]); /* +2 beacause of "='" chars */
 			strncpy(tmp_buff, &str[cmd_len + 2], alias_len - 1);

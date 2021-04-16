@@ -52,7 +52,7 @@ int get_env_index(char *name)
 	int len = _strlen(name);
 
 	for (i = 0; __environ[i] != NULL; i++)
-		if (strncmp(__environ[i], name, len) == 0)
+		if (_strncmp(__environ[i], name, len) == 0)
 			return (i);
 
 	return (-1);

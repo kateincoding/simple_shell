@@ -134,6 +134,7 @@ char *_strcat(char *s1, const char *s2);
 char *_strncat(char *s1, const char *s2, size_t n);
 char *num_to_str(int num);
 int	_strncmp(const char *s1, const char *s2, size_t n);
+int _puts(char *str);
 
 /* f_strings_creations */
 char *f_strjoin(char const *s1, char const *s2);

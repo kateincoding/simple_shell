@@ -48,12 +48,17 @@ int _history(void)
 {
 	list_t *curr;
 	char *str_num;
+	int i, len;
 	int count = *get_history_lines_count() % 4096;
 
 	for (curr = *get_history_addrss(); curr != NULL; curr = curr->next)
 	{
 		str_num = num_to_str(count++);
-		printf("%5s  %s\n", str_num, curr->str);
+		len = _puts(str_num);
+		for (i = len; i < 7; i++) /* 5 per number, 2 aditional */
+			_puts(" ");
+		_puts(curr->str);
+		_puts("\n");
 		free(str_num);
 	}
 
