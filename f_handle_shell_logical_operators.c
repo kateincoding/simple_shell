@@ -144,5 +144,5 @@ void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
 	write(2, commands[0], _strlen(commands[0]));
 	write(2, ": not found\n", 20);
 	free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-	exit(errno);
+	exit(127);
 }
