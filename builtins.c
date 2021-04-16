@@ -106,13 +106,14 @@ int _cd(char *path)
 {
 	char buff[1024];
 	char *oldpwd;
+	char *_path = path;
 
 	if (_strcmp(path, "-") == 0)
 		path = _getenv("OLDPWD");
 
 	if (path == NULL)
 	{
-		print_builtin_error("Error: cd: OLDPWD not set\n");
+		print_builtin_error("cd: OLDPWD not set", "");
 		return (-1);
 	}
 	/* Needed to avoid reading on freed memory */
@@ -122,14 +123,14 @@ int _cd(char *path)
 	if (oldpwd == NULL)
 	{
 		free(path);
-		print_builtin_error("Error while getting current directory\n");
+		print_builtin_error("cd: couldn't get current dir", "");
 		return (-1);
 	}
 	/* Try to change the current dir */
 	if (chdir(path) == -1)
 	{
 		free(path);
-		perror("Error while changing dir");
+		print_builtin_error("cd: can't change cd to ", _path);
 		set_process_exit_code(1);
 		return (-1);
 	}

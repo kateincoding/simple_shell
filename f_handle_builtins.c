@@ -99,7 +99,7 @@ int other_set_buitlins(char **commands)
 	{
 		if (commands[1] != NULL)
 		{
-			print_builtin_error("Error: history doesn't need any argument\n");
+			print_builtin_error("history: No args allowed", "");
 			return (1);
 		}
 

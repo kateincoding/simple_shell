@@ -1,7 +1,10 @@
 #include "shell.h"
 
+static char *FIRST_ARG;
+
 int handle_arguments(int ac, char **av, int *exec_file);
 void sigintHandler(int sig_num);
+char *get_first_av();
 
 /**
  * main - Entry point
@@ -16,6 +19,8 @@ int main(int ac, char **av)
 	char *buff = NULL;
 	size_t buff_len = 0;
 	int fd;
+
+	FIRST_ARG = av[0];
 
 	signal(SIGINT, sigintHandler);
 	fd = handle_arguments(ac, av, &exec_file);
@@ -87,4 +92,14 @@ int handle_arguments(int ac, char **av, int *exec_file)
 void sigintHandler(int __attribute__((unused))sig_num)
 {
 	write(STDIN_FILENO, "\n$ ", 3);
+}
+
+/**
+ * get_first_av - Returns the first argument passed to main
+ *
+ * Return: Pointer to first arg passed to main
+*/
+char *get_first_av(void)
+{
+	return (FIRST_ARG);
 }
