@@ -10,13 +10,13 @@ int validate_env_name(char *name)
 {
 	if (name == NULL)
 	{
-		print_builtin_error("Error: name must be some string\n");
+		print_builtin_error("setenv: Needs 2 args", "");
 		return (-1);
 	}
 
 	if (!is_valid_env_var_name(name))
 	{
-		print_builtin_error("Error: Invalid name for environment variable\n");
+		print_builtin_error("setenv: Invalid name ", name);
 		return (-1);
 	}
 

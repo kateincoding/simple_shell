@@ -34,7 +34,7 @@ int handle_exit(char *buff, char **cmds_list, char **commands)
 	}
 
 	/* the exit status passed was illegal */
-	print_Illegal_exit_status(commands[1]);
+	print_builtin_error("exit: Illegal number: ", commands[1]);
 	return (-1);
 }
 
@@ -62,23 +62,4 @@ int get_exit_status(char *buff)
 	}
 
 	return (status);
-}
-
-/**
- * print_Illegal_exit_status - Prints the error message to the screen
- * @status_str: Staus passed as exit status argument
-*/
-void print_Illegal_exit_status(char *status_str)
-{
-	int i;
-	char err_msg[50];
-
-	for (i = 0; i < 50; i++)
-		err_msg[i] = '\0';
-
-	_strcpy(err_msg, "exit: Illegal number: ");
-	_strcat(err_msg, status_str);
-	_strcat(err_msg, "\n");
-	/* Print error message */
-	print_builtin_error(err_msg);
 }

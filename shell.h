@@ -41,6 +41,8 @@ size_t print_list(const list_t *h);
 list_t *add_node_end(list_t **head, const char *str);
 void free_list(list_t *head);
 
+char *get_first_av(void);
+
 /*function with all the logical part that will work with the main */
 int execute_commands(char *buff, char **cmds_list, char *cmd,
 											int read, char *first_av);
@@ -120,11 +122,10 @@ char *handle_comment(char *str_input);
 /* Exit handlers */
 int handle_exit(char *buff, char **cmds_list, char **commands);
 int get_exit_status(char *buff);
-void print_Illegal_exit_status(char *status_str);
 
 /* Error handlers */
 void dispatch_error(char *msg);
-void print_builtin_error(char *msg);
+void print_builtin_error(char *msg, char *arg);
 
 /* strings functions */
 int _strlen(const char *s);
