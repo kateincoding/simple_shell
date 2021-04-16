@@ -1,9 +1,9 @@
-# simple_shell
+# Simple Shell
  Project consists in creating a basic command interpreter (Shell) with C programming language.
 
  ## Table of Contents
 * [Introduction](#Introduction)
-  * What is Shell
+  * What is Simple Shell
 * [Project Information](#Project-Information)
     * General requirements
     * Allowed functions
@@ -19,8 +19,23 @@
 
 ## Introduction
 
-### What is Shell
-A **shell** is a command-line interpreter, it is the computer program that provides a user interface to access the services of the operating system.
+### What is Simple Shell
+**Simple Shell** simulates **shell**, that is a command-line interpreter. It is the computer program that provides a user interface to access the services of the operating system.
+
+In other words, simple_shell is a program that reads commands provided, check if exists and execute
+
+**Interactive mode**
+
+    test@ubuntu:~/simple_shell$ ./hsh
+    $ ls
+    file1 file2 file3 file4
+    $ 
+
+**Non-interactive mode**
+
+    test@ubuntu:~/simple_shell$ echo "ls" | ./hsh
+    file1 file2 file3 file4
+    test@ubuntu:~/simple_shell$
 
 ## Project Information
 
