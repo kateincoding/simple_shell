@@ -90,7 +90,7 @@ int execute_commands(char *buff, char **cmds_list,
 	char *cmd, int __attribute__((unused))read, char *first_av)
 {
 	char **commands;
-	int child_pid, flag = 0, *status = process_exit_code();
+	int child_pid, _err = 0, flag = 0, *status = process_exit_code();
 
 	/* Generate array of commands */
 	commands = parse_user_input(cmd, " ");
@@ -113,8 +113,10 @@ int execute_commands(char *buff, char **cmds_list,
 	}
 	else if (child_pid == 0)
 	{
-		handle_PATH(commands);
+		_err = handle_PATH(commands);
 		execve(commands[0], commands, __environ);
+		if (_err != 0)
+			handle_cmd_not_found(buff, cmds_list, commands, first_av);
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		dispatch_error(first_av);
 	}
