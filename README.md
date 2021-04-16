@@ -112,8 +112,10 @@ $
 ---|---|---
 1|[README.md](./README.md)|Readme
 2|[main.c](./main.c)|Entry point
+3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
 3|[shell.h](./shell.h)|Header file
 
+
 **man or help:**
-help [cd]
-help [help]
+1|[man_1_simple_shell](./man_1_simple_shell)|Manual of simple shell
+2|[help](./_help.c)|Function of help
