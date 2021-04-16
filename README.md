@@ -129,12 +129,12 @@ $
 3|[shell.h](./shell.h)|Header file
 
 ## Other Functions 
-
 ##|File|Description
 ---|---|---
 
 ### Manual of the program & Help program
-**man or help:**
+##|File|Description
+---|---|---
 1|[man_1_simple_shell](./man_1_simple_shell)|Manual of simple shell
 2|[help](./_help.c)|Function of help
 
