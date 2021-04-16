@@ -54,7 +54,6 @@ void __attribute__((constructor)) build_dynamic_environ(void);
 void __attribute__((destructor)) free_dynamic_environ(void);
 
 char *_getenv(char *name);
-void free_temp_cmds(void);
 
 /* replacement variables */
 void handle_var_replacement(char **commands);

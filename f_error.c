@@ -10,7 +10,7 @@ void dispatch_error(char *msg)
 
 	/* perror(msg); */
 	write(STDERR_FILENO, msg, len);
-	write(STDERR_FILENO,": not found\n", 12);
+	write(STDERR_FILENO, ": not found\n", 12);
 	/*exit(errno);*/
 	exit(127);
 }
