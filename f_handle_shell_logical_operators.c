@@ -105,22 +105,29 @@ int execute_commands(char *buff, char **cmds_list,
 		return (-1);
 	}
 	/* check if we can only run for positives */
-	child_pid = fork();/* Fork parent process to execute the command */
-	if (child_pid == -1)
+	_err = handle_PATH(commands);
+	if (_err != 0)
 	{
-		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		dispatch_error(first_av);
+		handle_cmd_not_found(buff, cmds_list, commands, first_av);
+		free_dbl_ptr(commands);
+		return (127);
 	}
-	else if (child_pid == 0)
+	else
 	{
-		_err = handle_PATH(commands);
-		execve(commands[0], commands, __environ);
-		if (_err != 0)
-			handle_cmd_not_found(buff, cmds_list, commands, first_av);
-		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		dispatch_error(first_av);
+		child_pid = fork();// Fork parent process to execute the command
+		if (child_pid == -1)
+		{
+			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+			dispatch_error(first_av);
+		}
+		else if (child_pid == 0)
+		{
+			execve(commands[0], commands, __environ);
+			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+			dispatch_error(first_av);
+		}
+		wait(status);
 	}
-	wait(status);
 	*status = WEXITSTATUS(*status);
 	if (*status == 2)
 		set_process_exit_code(127);
@@ -143,6 +150,53 @@ void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
 	write(2, ": 1: ", 5);
 	write(2, commands[0], _strlen(commands[0]));
 	write(2, ": not found\n", 12);
-	free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-	exit(127);
+	/* free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS); */
+	/* free_dbl_ptr(commands);*/
+	/* free(buff); */
+	/* exit(127); */
+	/* set_process_exit_code(127); */
 }
+
+/*
+int execute_commands(char *buff, char **cmds_list,
+	char *cmd, int __attribute__((unused))read, char *first_av)
+{
+	char **commands;
+	int child_pid, _err = 0, flag = 0, *status = process_exit_code();
+
+	Generate array of commands
+	commands = parse_user_input(cmd, " ");
+	handle_var_replacement(commands);
+	handle_aliases(commands);
+	Exit error, ENTER, and builtins
+	if (handle_exit(buff, cmds_list, commands) == -1 ||
+			handle_enter(commands) == 1	||
+			handle_builtins(commands) == 1)
+	{
+		free_dbl_ptr(commands);
+		return (-1);
+	}
+	/* check if we can only run for positives
+	child_pid = fork();/* Fork parent process to execute the command
+	if (child_pid == -1)
+	{
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		dispatch_error(first_av);
+	}
+	else if (child_pid == 0)
+	{
+		_err = handle_PATH(commands);
+		execve(commands[0], commands, __environ);
+		if (_err != 0)
+			handle_cmd_not_found(buff, cmds_list, commands, first_av);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		dispatch_error(first_av);
+	}
+	wait(status);
+	*status = WEXITSTATUS(*status);
+	if (*status == 2)
+		set_process_exit_code(127);
+	free_dbl_ptr(commands);
+	return (flag);
+}
+*/
