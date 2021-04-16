@@ -103,7 +103,6 @@ int execute_commands(char *buff, char **cmds_list,
 		free_dbl_ptr(commands);
 		return (-1);
 	}
-	/* check if we can only run for positives */
 	_err = handle_PATH(commands);
 	if (_err != 0)
 	{
@@ -111,22 +110,19 @@ int execute_commands(char *buff, char **cmds_list,
 		free_dbl_ptr(commands);
 		return (127);
 	}
-	else
+	child_pid = fork();/*Fork parent process to execute the command */
+	if (child_pid == -1)
 	{
-		child_pid = fork();/*Fork parent process to execute the command */
-		if (child_pid == -1)
-		{
-			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-			dispatch_error(first_av);
-		}
-		else if (child_pid == 0)
-		{
-			execve(commands[0], commands, __environ);
-			free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-			dispatch_error(first_av);
-		}
-		wait(status);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		dispatch_error(first_av);
 	}
+	else if (child_pid == 0)
+	{
+		execve(commands[0], commands, __environ);
+		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
+		dispatch_error(first_av);
+	}
+	wait(status);
 	*status = WEXITSTATUS(*status);
 	if (*status == 2)
 		set_process_exit_code(127);
@@ -136,8 +132,6 @@ int execute_commands(char *buff, char **cmds_list,
 
 /**
  * handle_cmd_not_found - Print a message to stderr
- * @buff: User's input
- * @cmds_list: Array of commands
  * @commands: Array of strings
  * @first_av: First argument passed to the executable
 */
