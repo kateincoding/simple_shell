@@ -114,10 +114,10 @@ int execute_commands(char *buff, char **cmds_list,
 	else if (child_pid == 0)
 	{
 		_err = handle_PATH(commands);
-		if (_err == 0)
+		/*if (_err == 0)
 			execve(commands[0], commands, __environ);
 		else
-			handle_cmd_not_found(buff, cmds_list, commands, first_av);
+			handle_cmd_not_found(buff, cmds_list, commands, first_av);*/
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 		dispatch_error(first_av);
 	}
