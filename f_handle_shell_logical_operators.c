@@ -140,9 +140,9 @@ void handle_cmd_not_found(char *buff, char **cmds_list, char **commands,
 {
 	set_process_exit_code(127);
 	write(2, first_av, _strlen(first_av));
-	write(2, ": ", 2);
+	write(2, ": 1: ", 4);
 	write(2, commands[0], _strlen(commands[0]));
-	write(2, ": command not found\n", 20);
+	write(2, ": not found\n", 20);
 	free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
 	exit(errno);
 }
