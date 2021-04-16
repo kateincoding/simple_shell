@@ -107,7 +107,6 @@ int execute_commands(char *buff, char **cmds_list,
 	if (child_pid == -1)
 	{
 		free_allocs(buff, cmds_list, commands, F_BUFF | F_CMD_L | F_CMDS);
-		free_temp_cmds();
 		dispatch_error(first_av);
 	}
 	else if (child_pid == 0)
@@ -136,15 +135,4 @@ int execute_commands(char *buff, char **cmds_list,
 		set_process_exit_code(127);
 	free_dbl_ptr(commands);
 	return (flag);
-}
-
-/**
- * free_temp_cmds - Frees the memory used by temp cmds
-*/
-void free_temp_cmds(void)
-{
-	/*
-	free_dbl_ptr(cmds_l);
-	free_dbl_ptr(cmds_l2);
-	*/
 }

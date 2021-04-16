@@ -39,7 +39,7 @@ int _setenv(char *name, char *value)
 
 		while (__environ[env_count] != NULL)
 			env_count++;
-		
+
 		old_size = sizeof(char *) * (env_count);
 		new_size = sizeof(char *) * (env_count + 2);
 		__environ = _realloc(__environ, old_size, new_size);
