@@ -91,7 +91,6 @@ int execute_commands(char *buff, char **cmds_list,
 	char **commands;
 	int child_pid, _err = 0, flag = 0, *status = process_exit_code();
 
-	/* Generate array of commands */
 	commands = parse_user_input(cmd, " ");
 	handle_var_replacement(commands);
 	handle_aliases(commands);
@@ -106,6 +105,7 @@ int execute_commands(char *buff, char **cmds_list,
 	_err = handle_PATH(commands);
 	if (_err != 0)
 	{
+		execve(commands[0], commands, __environ);
 		handle_cmd_not_found(commands, first_av);
 		free_dbl_ptr(commands);
 		return (127);
