@@ -8,11 +8,12 @@ void dispatch_error(char *msg)
 {
 	int len = _strlen(msg);
 
-	/* perror(msg); */
-	write(STDERR_FILENO, msg, len);
-	write(STDERR_FILENO,": not found\n", 12);
-	/*exit(errno);*/
-	exit(127);
+
+	perror(msg);
+	/*write(STDERR_FILENO, msg, len);*/
+	/*write(STDERR_FILENO,": not found\n", 12);*/
+	exit(errno);
+	/*exit(127); */
 }
 
 /**
