@@ -114,6 +114,7 @@ int execute_commands(char *buff, char **cmds_list,
 	else if (child_pid == 0)
 	{
 		_err = handle_PATH(commands);
+		execve(commands[0], commands, __environ);
 		/*if (_err == 0)
 			execve(commands[0], commands, __environ);
 		else
