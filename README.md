@@ -146,3 +146,8 @@ $
 2|[main.c](./main.c)|Entry point
 3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
 3|[shell.h](./shell.h)|Header file
+
+## Authors
+
+Katherine Soto <kateincoding@gmail.com>
+Renato Leon <2829@holbertonschool.com>
