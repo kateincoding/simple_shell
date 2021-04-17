@@ -124,13 +124,17 @@ $
 ##|File|Description
 ---|---|---
 1|[README.md](./README.md)|Readme
-2|[main.c](./main.c)|Entry point
+2|[main.c](./main.c)|Entry point of the simple_shell program
 3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
 3|[shell.h](./shell.h)|Header file
 
 ## Other Functions 
 ##|File|Description
 ---|---|---
+1|[f_command_handlers.c](./f_command_handlers.c)|Function with relation with parse, buil a path command and checks if the command to execute could be found in PATH's dirs
+2|[f_handle_builtins.c](./f_handle_builtins.c)|Function that verifies if a command is a builtin or not and executes
+3|[builtins.c](./builtins.c)|set, unset env
+4|[f_handle_comment.c](./f_handle_comment.c)|Handle comment #
 
 ### Manual of the program & Help program
 ##|File|Description
@@ -142,10 +146,9 @@ $
 
 ##|File|Description
 ---|---|---
-1|[README.md](./README.md)|Readme
-2|[main.c](./main.c)|Entry point
-3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
-3|[shell.h](./shell.h)|Header file
+1|[help](./help)|help file of help
+2|[alias](./main.c)|help file of alias
+
 
 ## Authors
 
