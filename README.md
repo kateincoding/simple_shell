@@ -12,9 +12,6 @@
     * Compilation
     * Testing
     * Files
-    * Show flowchart
-* [Extra Information](#Extra-Information)
-    * Resources
 * [Authors](#Authors)
 
 ## Introduction
@@ -118,6 +115,42 @@ $ cat test_ls_2 | ./hsh
 hsh main.c shell.c test_ls_2
 hsh main.c shell.c test_ls_2
 $
+```
+
+### Examples
+
+```
+$ ls
+alias              f_alias_list.c        f_handle_comment.c                  f_strings2.c                help                _own_memory.c  _strncpy.c
+a.out              f_builtin_utils.c     f_handle_enter.c                    f_strings.c                 _help.c             _puts.c        _strtok.c
+AUTHORS            f_command_handlers.c  f_handle_shell_logical_operators.c  f_strings_creations.c       _history.c          README.md      unset
+builtins.c         f_error.c             f_linked_lists.c                    _getenv.c                   hsh                 set            _write_history.c
+cd                 f_exit.c              f_memory.c                          _get_history_lines_count.c  main.c              shell.h
+_dollar_special.c  f_handle_builtins.c   f_special.c                         _handle_var_replacement.c   man_1_simple_shell  _strcpy.c
+```
+```
+$ pwd
+/home/vagrant/proyecto_final/simple_shell
+```
+It works with spaces:
+```
+$ ls        -la
+total 248
+drwxrwxr-x  3 vagrant vagrant  4096 Apr 17 00:33 .
+drwxrwxr-x 11 vagrant vagrant  4096 Apr 16 21:24 ..
+-rw-rw-r--  1 vagrant vagrant   584 Apr 15 14:44 alias
+-rwxrwxr-x  1 vagrant vagrant 34624 Apr 16 22:01 a.out
+-rw-rw-r--  1 vagrant vagrant   159 Apr 15 14:44 AUTHORS
+-rw-rw-r--  1 vagrant vagrant  3978 Apr 16 19:37 builtins.c
+-rw-rw-r--  1 vagrant vagrant  1599 Apr 15 14:44 cd
+-rw-rw-r--  1 vagrant vagrant   487 Apr 15 14:44 _dollar_special.c
+-rw-rw-r--  1 vagrant vagrant  3934 Apr 16 17:13 f_alias_list.c
+-rw-rw-r--  1 vagrant vagrant  1083 Apr 16 19:37 f_builtin_utils.c
+-rw-rw-r--  1 vagrant vagrant  3018 Apr 16 17:13 f_command_handlers.c
+-rw-rw-r--  1 vagrant vagrant   754 Apr 16 19:37 f_error.c
+-rw-rw-r--  1 vagrant vagrant  1372 Apr 16 19:37 f_exit.c
+-rw-rw-r--  1 vagrant vagrant  1910 Apr 16 19:37 f_handle_builtins.c
+-rw-rw-r--  1 vagrant vagrant   502 Apr 15 14:44 f_handle_comment.c
 ```
 ### Principal Function
 
