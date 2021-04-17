@@ -1,11 +1,11 @@
-# simple_shell
+# Simple Shell
  Project consists in creating a basic command interpreter (Shell) with C programming language.
 
  ## Table of Contents
 * [Introduction](#Introduction)
-  * What is Shell
-* [Project Information](#Project-Information)
-    * General requirements
+  * What is Simple Shell
+* [Project Consideration](#Project-Consideration)
+    * General considerations
     * Allowed functions
 * [Documentation](#Documentation)
     * Download
@@ -19,22 +19,35 @@
 
 ## Introduction
 
-### What is Shell
-A **shell** is a command-line interpreter, it is the computer program that provides a user interface to access the services of the operating system.
+### What is Simple Shell
+**Simple Shell** simulates **shell**, that is a command-line interpreter. It is the computer program that provides a user interface to access the services of the operating system.
 
-## Project Information
+In other words, simple_shell is a program that reads commands provided, check if exists and execute
 
-### General requirements
- * Allowed editors: vi, vim, emacs
- * All your files will be compiled on `Ubuntu 14.04 LTS`
- * Your C programs and functions will be compiled with `gcc 4.8.4` using the flags `-Wall` `-Werror` `-Wextra` and `-pedantic`
- * Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
- * No more than 5 functions per file
- * All your header files should be include guarded
- * This shell should not have any memory leaks
- * Unless specified otherwise, your program must have the exact same output as `sh` (`/bin/sh`) as well as the exact same error output.
+**Interactive mode**
 
-### Allowed functions
+    test@ubuntu:~/simple_shell$ ./hsh
+    $ ls
+    file1 file2 file3 file4
+    $ 
+
+**Non-interactive mode**
+
+    test@ubuntu:~/simple_shell$ echo "ls" | ./hsh
+    file1 file2 file3 file4
+    test@ubuntu:~/simple_shell$
+
+## Project Consideration
+
+### General considerations
+ * The program is builted and run in `Ubuntu 14.04 LTS`
+ * The program is compiled with `gcc 4.8.4` using the flags `-Wall` `-Werror` `-Wextra` and `-pedantic`
+ * The code is in format: Betty style. `betty *.c`
+ * All the headers is in `shell.h`
+ * The program don't have memory leaks in father process neither in each child process
+ * Simple_Shell have the exact same output as `sh` (`/bin/sh`) as well as the exact same error output.
+
+### Allowed functions that we use in SIMPLE_SHELL
 * `access` (man 2 access)
 * `chdir` (man 2 chdir)
 * `close` (man 2 close)
@@ -75,11 +88,12 @@ You can clone this repository this way:
 ### Compilation
 Your shell will be compiled this way:
 
+`cd simple_shell`
 `gcc -Wall -Werror -Wextra -pedantic *.c -o hsh`
 
 ### Testing
 
-Your shell should work like this in interactive mode:
+simple_shell works like this in interactive mode:
 
 ```
 $ ./hsh
@@ -89,7 +103,6 @@ hsh main.c shell.c
 ($) exit
 $
 ```
-
 
 Also in non-interactive mode:
 
@@ -106,14 +119,35 @@ hsh main.c shell.c test_ls_2
 hsh main.c shell.c test_ls_2
 $
 ```
-### Files
+### Principal Function
 
 ##|File|Description
 ---|---|---
 1|[README.md](./README.md)|Readme
 2|[main.c](./main.c)|Entry point
+3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
 3|[shell.h](./shell.h)|Header file
 
-**man or help:**
-help [cd]
-help [help]
+## Other Functions 
+##|File|Description
+---|---|---
+
+### Manual of the program & Help program
+##|File|Description
+---|---|---
+1|[man_1_simple_shell](./man_1_simple_shell)|Manual of simple shell
+2|[help](./_help.c)|Function of help
+
+## Help Files
+
+##|File|Description
+---|---|---
+1|[README.md](./README.md)|Readme
+2|[main.c](./main.c)|Entry point
+3|[f_handle_shell_logical_operators.c](./f_handle_shell_logical_operators.c)|Function to handle the semicolon and enter block per block to execute commands
+3|[shell.h](./shell.h)|Header file
+
+## Authors
+
+Katherine Soto <kateincoding@gmail.com>
+Renato Leon <2829@holbertonschool.com>
