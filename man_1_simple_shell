@@ -1,21 +1,49 @@
-.TH SIMPLE_SHELL 1 "April 2021" "Holberton School" "General Commands Manual"
+.TH SIMPLE_SHELL 1 "April 16, 2021" "Holberton School" "General Commands Manual"
 
 .SH NAME
-       Based in bash - GNU Bourne-Again SHell
-       simple_shell - command language interpreter that reads from standard input
+       Based in bash - GNU Bourne-Again Shell
+       simple_shell - command language interpreter that reads from standard input or file
 
 .SH SYNOPSIS
-       bash [options] [command_string | file]
-
-       .B gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
-       .B ./hsh
+       ./simple_shell
+       ./simple_shell [file]
+       [command] | ./simple_shell
+       
+       gcc -Wall -Werror -Wextra -pedantic *.c -o simple_shell
 
 .SH DESCRIPTION
-       Bash  is an sh-compatible command language interpreter that executes commands read from the standard input or from a file.  Bash also incorporates use‐
-       ful features from the Korn and C shells (ksh and csh).
+simple_shell is a command language interpreter that executes commands read from the standard input or from a file.
 
-       Bash is intended to be a conformant implementation of the Shell and Utilities portion of the IEEE POSIX specification (IEEE Standard 1003.1).  Bash can
-       be configured to be POSIX-conformant by default.
+.TP
+.B builtins
+
+.TP
+.BR env
+list all environment variables
+
+.TP
+.BR setenv " " [name] " " [value]
+sets the "name" environment variable with to value "value" or updates it if it already exists
+
+.TP
+.BR unsetenv " " [name]
+deletes the "name" environment variable from the enviroment variables
+
+.TP
+.BR cd " " [dir_path]
+changes the current working directory to "dir_path"
+
+.TP
+.BR alias " " [name=[value] ...]
+lists or sets command aliases
+
+.TP
+.BR help " " [builtin_name]
+displays the help for a builtin command
+
+.TP
+.BR history
+displays the history commands used by the user in the current sesion
 
 .TP
 \fB Return (Exit Value) \fR
@@ -26,9 +54,7 @@ executed. If the command ran succesfuly, the exit value will be zero (0).
 .TP
 \fBFORMAT OF COMMAND INPUT\fR
 
-The simple shell can work in two different modes, \fIinteractive\fR and \fInon-interactive\fR. In both modes, commands
-can be written with their absolute path or simply their executable name if they exist in one of the folders defined by
-PATH.
+The simple shell can work in two different modes, \fIinteractive\fR and \fInon-interactive\fR. In both modes, commands can be written with their absolute path or simply their executable name if they exist in one of the folders defined by PATH.
 
 Example:
 
@@ -52,7 +78,7 @@ file1 file2 dira dirb
 
 $
 
-In order to exit the simple shell, the user must press the combination CTRL + D, as the CTRL + C signal is reserved only for internal script termination and it does not exit the shell.
+In order to exit the simple shell, the user must write "exit" command and press enter or press the combination keys CTRL + D, as the CTRL + C signal is reserved only for internal script termination and it does not exit the shell.
 
 .IP \fB-Non-interactive Mode:\fR
 
@@ -66,6 +92,25 @@ Example:
 file1 file2 file3 file4
 
 \fBvagrant@vagrant-ubuntu-trusty-64:~/simple_shell$\fR
+
+.SH EXAMPLES
+.B Interactive
+       vagrant@vagrant-ubuntu-trusty-64:~/simple_shell$ ./simple_shell
+       $ ls
+       file0 file1 file2
+       $ echo 123
+       123
+       $ echo $?
+       0
+       $ exit
+       vagrant@vagrant-ubuntu-trusty-64:~/simple_shell$
+
+.B Non Interactive
+       vagrant@vagrant-ubuntu-trusty-64:~/simple_shell$ echo "pwd" | ./simple_shell
+       /home/vagrant/simple_shell
+
+       vagrant@vagrant-ubuntu-trusty-64:~/simple_shell$ echo "ls" | ./simple_shell
+       file0 file1 file2
 
 --
 
